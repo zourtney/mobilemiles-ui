@@ -10,7 +10,6 @@ angular.module('mobilemilesApp')
         user: '='
       },
       link: function(/*scope, el*/) {
-        //scope.hai = 'hello';
       }
     };
   }]);
