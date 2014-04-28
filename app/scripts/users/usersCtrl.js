@@ -1,16 +1,24 @@
 'use strict';
 
 angular.module('mobilemilesApp')
-  .controller('UsersCtrl', ['$scope', 'Users', 'Session', function ($scope, Users, Session) {
+  .controller('UsersCtrl', ['$scope', '$rootScope', 'Users', 'Session', function ($scope, $rootScope, Users, Session) {
     $scope.users = Users.query();
-    $scope.session = Session.get(function(data) {
-      $scope.user = data.userid;
-    });
+    //$rootScope.session = Session.get();
+    //$scope.session = $rootScope.session;
 
-    $scope.createSession = function(user) {
-      Session.save({
-        email: user.email,
-        password: 'aoeu'
-      });
+    $scope.logIn = function() {
+      Session.save($scope.loginUser,
+        function(data) {
+          $rootScope.session = data.session;
+          $rootScope.user = data.user;
+        },
+        function(data) {
+          $scope.error = data.data.error;
+        }
+      );
+    };
+
+    $scope.getSession = function() {
+      $rootScope.session = Session.get();
     };
   }]);

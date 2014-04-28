@@ -1,0 +1,13 @@
+{{user}}
+{{session}}
+
+<div class="alert alert-warning">{{error}}</div>
+
+<form>
+  Email: <input type="text" name="email" ng-model="loginUser.email" />
+  Password: <input type="password" name="password" ng-model="loginUser.password" />
+  <button ng-click="logIn()">Log In</button>
+</form>
+
+<button ng-click="getSession()">Get session</button>
+<div class="session">{{session}}</div>
