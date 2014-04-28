@@ -420,6 +420,11 @@ module.exports = function (grunt) {
     'htmlmin'
   ]);
 
+  grunt.registerTask('heroku', [
+    'clean:dist',
+    'bowerInstall'
+  ]);
+
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
