@@ -5,12 +5,12 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute',
+    'ngRoute'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/users.html',
+        templateUrl: 'views/userList.html',
         controller: 'UsersCtrl'
       })
       .otherwise({

@@ -1,0 +1,21 @@
+@import "colors";
+
+.user-list {
+  li {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid $list-divider-dark;
+  }
+
+  .user-id {
+    font-weight: bold;
+    margin-right: 20px;
+    &:before { 
+      content: "#";
+    }
+  }
+
+  .user-email {
+    font-style: italic;
+  }
+}
