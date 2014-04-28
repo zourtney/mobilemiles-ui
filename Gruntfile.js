@@ -420,7 +420,7 @@ module.exports = function (grunt) {
     'htmlmin'
   ]);
 
-  grunt.registerTask('heroku', [
+  grunt.registerTask('heroku:development', [
     'clean:dist',
     'bowerInstall'
   ]);
