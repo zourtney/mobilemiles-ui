@@ -1,8 +1,7 @@
 {
   "name": "mobilemiles",
   "version": "2.0.0",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",
     "grunt-bower-install": "~1.0.0",
@@ -31,6 +30,8 @@
     "karma-ng-scenario": "^0.1.0",
     "load-grunt-tasks": "~0.4.0",
     "time-grunt": "~0.2.1"
+  },
+  "devDependencies": {
   },
   "engines": {
     "node": ">=0.10.0"
