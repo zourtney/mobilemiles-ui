@@ -13,10 +13,10 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
 //   // Time how long tasks take. Can help when optimizing build times
-//   require('time-grunt')(grunt);
+  // require('time-grunt')(grunt);
 
 //   // Define the configuration for all the tasks
-//   grunt.initConfig({
+  grunt.initConfig({
 
 //     // Project settings
 //     yeoman: {
@@ -113,20 +113,20 @@ module.exports = function (grunt) {
 //       }
 //     },
 
-//     // Empties folders to start fresh
-//     clean: {
-//       dist: {
-//         files: [{
-//           dot: true,
-//           src: [
-//             '.tmp',
-//             '<%= yeoman.dist %>/*',
-//             '!<%= yeoman.dist %>/.git*'
-//           ]
-//         }]
-//       },
-//       server: '.tmp'
-//     },
+    // Empties folders to start fresh
+    clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= yeoman.dist %>/*',
+            '!<%= yeoman.dist %>/.git*'
+          ]
+        }]
+      },
+      server: '.tmp'
+    },
 
 //     // Add vendor prefixed styles
 //     autoprefixer: {
@@ -372,7 +372,7 @@ module.exports = function (grunt) {
 //         singleRun: true
 //       }
 //     }
-//   });
+  });
 
 
 //   grunt.registerTask('serve', function (target) {
@@ -421,7 +421,7 @@ module.exports = function (grunt) {
 //   ]);
 
   grunt.registerTask('heroku:development', [
-    // 'clean:dist',
+    'clean:dist'
     // 'bowerInstall'
   ]);
 
