@@ -25,6 +25,11 @@ module.exports = function (grunt) {
       dist: 'dist'
     },
 
+    bower: {
+      install: {
+      }
+    },
+
 //     // Watches files for changes and runs tasks based on the changed files
 //     watch: {
 //       bower: {
@@ -405,6 +410,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'bower:install',
     'bowerInstall',
     'useminPrepare',
     'concurrent:dist',
