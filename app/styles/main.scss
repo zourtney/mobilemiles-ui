@@ -1,14 +1,13 @@
 $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+@import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap/_variables';
 
-// bower:scss
-@import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
-// endbower
 
 // Import our styles
 @import "colors";
 @import "users";
+@import "login";
 
 
 h1 {

@@ -1,0 +1,43 @@
+@import "colors";
+
+.fullscreen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $login-body-bg;
+}
+
+.login-form {
+  position: absolute;
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  top: 100px;
+  background: $login-form-bg;
+  border: 1px solid $gray-light;
+  border-radius: 4px;
+  padding: 40px;
+
+  .logo-container {
+    text-align: center;
+  }
+  .logo {
+    margin: 0 auto;
+    font-weight: 100;
+    display: inline-block;
+  }
+  .wordmark {
+    font-size: 60px;  
+  }
+  .version {
+    font-size: 14px;
+    text-align: right;
+    margin: -15px 0 20px 0;
+  }
+
+  .actions {
+    float: right;
+  }
+}

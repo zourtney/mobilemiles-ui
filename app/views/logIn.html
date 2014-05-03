@@ -1,13 +1,41 @@
 {{user}}
 {{session}}
 
-<div class="alert alert-warning">{{error}}</div>
+<div class="fullscreen"></div>
 
-<form>
-  Email: <input type="text" name="email" ng-model="loginUser.email" />
-  Password: <input type="password" name="password" ng-model="loginUser.password" />
-  <button ng-click="logIn()">Log In</button>
+<form role="form" class="login-form transition">
+  <div class="logo-container">
+    <div class="logo">
+      <div class="wordmark">mobilemiles</div>
+      <div class="version">version 2.0</div>
+    </div>
+  </div>
+
+  <div class="alert alert-warning alert-dismissable" ng-show="error">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{error}}
+  </div>
+
+  <div class="form-group">
+    <label for="loginEmail">Email address</label>
+    <input type="email" class="form-control" id="loginEmail" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="loginPassword">Password</label>
+    <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+  </div>
+  <div class="form-group" ng-show="registerMode">
+    <label for="loginPasswordConfirm">Confirm</label>
+    <input type="password" class="form-control" id="loginPasswordConfirm" placeholder="Confirm password">
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-link" ng-click="registerMode = true" ng-hide="registerMode">Register</button>
+    <button class="btn btn-link" ng-click="registerMode = false" ng-show="registerMode">Back to login</button>
+    <button class="btn btn-primary" ng-click="logIn()" ng-hide="registerMode">Log In</button>
+    <button class="btn btn-primary" ng-click="register()" ng-show="registerMode">Register</button>
+  </div>
 </form>
 
-<button ng-click="getSession()">Get session</button>
+<button class="btn btn-primary" ng-click="getSession()">Get session</button>
 <div class="session">{{session}}</div>
