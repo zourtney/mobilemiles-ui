@@ -1,22 +1,26 @@
 'use strict';
 
-describe('Controller: UsersCtrl', function () {
+describe('Controller: LoginCtrl', function () {
 
   // load the controller's module
   beforeEach(module('mobilemilesApp'));
 
-  var UsersCtrl,
+  var LoginCtrl,
       scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    UsersCtrl = $controller('UsersCtrl', {
+    LoginCtrl = $controller('LoginCtrl', {
       $scope: scope
     });
   }));
 
-  it('should attach a list of users', function () {
-    expect(scope.users);
+  it('should provide a logIn() function', function () {
+    expect(scope.logIn);
+  });
+
+  it('should provide a register() function', function () {
+    expect(scope.register);
   });
 });
