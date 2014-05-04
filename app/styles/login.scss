@@ -9,6 +9,17 @@
   background: $login-body-bg;
 }
 
+.road {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 40px solid rgba(#fff, 0.1);
+  border-bottom: 40px dashed rgba(yellow, 0.1);
+  transform: rotate(-15deg);
+}
+
 .login-form {
   position: absolute;
   width: 400px;
@@ -39,5 +50,21 @@
 
   .actions {
     float: right;
+  }
+}
+
+
+.password-confirmation {
+  transition: all linear 0.1s;
+  display: block !important;
+  overflow: hidden;
+  height: 58px;
+  opacity: 1;
+  margin-bottom: 15px;
+
+  &.ng-hide {
+    opacity: 0;
+    height: 0;
+    margin-bottom: 0;
   }
 }

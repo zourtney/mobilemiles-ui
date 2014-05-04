@@ -1,9 +1,8 @@
-{{user}}
-{{session}}
+<div class="fullscreen">
+  <div class="road"></div>
+</div>
 
-<div class="fullscreen"></div>
-
-<form role="form" class="login-form transition">
+<form role="form" class="login-form" ng-class="registerMode ? 'register' : 'login'">
   <div class="logo-container">
     <div class="logo">
       <div class="wordmark">mobilemiles</div>
@@ -11,31 +10,26 @@
     </div>
   </div>
 
-  <div class="alert alert-warning alert-dismissable" ng-show="error">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    {{error}}
-  </div>
+  <div class="alert alert-warning alert-dismissable" ng-show="error">{{error}}</div>
 
   <div class="form-group">
     <label for="loginEmail">Email address</label>
-    <input type="email" class="form-control" id="loginEmail" placeholder="Enter email">
+    <input type="email" class="form-control" id="loginEmail" ng-model="email" placeholder="Enter email" autofocus="autofocus">
   </div>
   <div class="form-group">
     <label for="loginPassword">Password</label>
-    <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+    <input type="password" class="form-control" id="loginPassword" ng-model="password" placeholder="Password">
   </div>
-  <div class="form-group" ng-show="registerMode">
+  <div class="form-group password-confirmation" ng-show="registerMode">
     <label for="loginPasswordConfirm">Confirm</label>
-    <input type="password" class="form-control" id="loginPasswordConfirm" placeholder="Confirm password">
+    <input type="password" class="form-control" id="loginPasswordConfirm" ng-model="passwordConfirm" placeholder="Confirm password">
   </div>
 
   <div class="actions">
-    <button class="btn btn-link" ng-click="registerMode = true" ng-hide="registerMode">Register</button>
-    <button class="btn btn-link" ng-click="registerMode = false" ng-show="registerMode">Back to login</button>
+    <input type="submit" class="hidden" ng-click="onSubmit()" />
+    <a class="btn btn-link register" ng-click="registerMode = true" ng-hide="registerMode">Register</a>
+    <a class="btn btn-link" ng-click="registerMode = false" ng-show="registerMode">Back to login</a>
     <button class="btn btn-primary" ng-click="logIn()" ng-hide="registerMode">Log In</button>
     <button class="btn btn-primary" ng-click="register()" ng-show="registerMode">Register</button>
   </div>
 </form>
-
-<button class="btn btn-primary" ng-click="getSession()">Get session</button>
-<div class="session">{{session}}</div>
