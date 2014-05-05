@@ -43,6 +43,13 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
+      coffee: {
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+        tasks: ['coffeelint:server', 'coffee:server', 'newer:jshint:all'],
+        options: {
+          livereload: true
+        }
+      },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
@@ -112,7 +119,8 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        '<%= yeoman.app %>/scripts/{,*/}*.js',
+        '.tmp/scripts/{,*/}*.js',
       ],
       test: {
         options: {
@@ -355,19 +363,41 @@ module.exports = function (grunt) {
       }
     },
 
+    coffee: {
+      dist: {
+        expand: true,
+        flatten: true,
+        cwd: '<%= yeoman.app %>/scripts',
+        src: ['*.coffee'],
+        dest: '.tmp/concat/',
+        ext: '.js'
+      },
+      server: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/scripts',
+        src: ['**/*.coffee'],
+        dest: '.tmp/scripts',
+        ext: '.js'
+      }
+    },
+
+    coffeelint: {
+      server: {
+        app: ['<%= yeoman.app %>/scripts']
+      }
+    },
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        // 'compass:server'
+        'coffee:server',
         'sass:server'
       ],
       test: [
-        //'compass'
         'sass'
       ],
       dist: [
         'sass:dist',
-        // 'compass:dist',
         'imagemin',
         'svgmin'
       ]
