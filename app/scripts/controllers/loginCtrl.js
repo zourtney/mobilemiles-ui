@@ -14,6 +14,8 @@ angular.module('mobilemilesApp')
     };
     
     $scope.logIn = function() {
+      $scope.isBusy = true;
+
       var session = new Session();
       session.email = $scope.email;
       session.password = $scope.password;
@@ -26,15 +28,19 @@ angular.module('mobilemilesApp')
         })
         .catch(function(data) {
           $scope.error = data.data.error;
+        })
+        .finally(function() {
+          $scope.isBusy = false;
         });
     };
 
     $scope.register = function() {
-      console.log('registering');
       if ($scope.password !== $scope.passwordConfirm) {
         $scope.error = 'Passwords do not match.';
       }
       else {
+        $scope.isBusy = true;
+
         var user = new User();
         user.user = {
           email: $scope.email,
@@ -48,6 +54,9 @@ angular.module('mobilemilesApp')
           .catch(function(data) {
             console.error(data);
             $scope.error = 'Unknown error occurred while registering.';
+          })
+          .finally(function() {
+            $scope.isBusy = false;
           });
       }
     };

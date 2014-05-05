@@ -53,6 +53,12 @@
   }
 }
 
+.login-form.busy {
+  .form-group label {
+    color: $gray-light;
+  }
+}
+
 
 .password-confirmation {
   transition: all linear 0.1s;
