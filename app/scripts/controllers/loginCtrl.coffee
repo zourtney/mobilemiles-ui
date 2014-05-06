@@ -1,9 +1,8 @@
 'use strict';
 
 app = angular.module 'mobilemilesApp'
-deps = ['$scope', '$rootScope', '$location', 'properties', 'User', 'Session']
 
-app.controller 'LoginCtrl', [deps, ($scope, $rootScope, $location, properties, User, Session) ->
+app.controller 'LoginCtrl', ['$scope', '$rootScope', '$location', 'properties', 'User', 'Session', ($scope, $rootScope, $location, properties, User, Session) ->
 
   # Handle 'enter'-key submission from the form (since we can't reliably use
   # the default "first button is the submit button" with all the hiding logic.)
@@ -44,5 +43,4 @@ app.controller 'LoginCtrl', [deps, ($scope, $rootScope, $location, properties, U
         $scope.logIn()
       .catch -> $scope.error = 'Unknown error occurred while registering.'
       .finally -> $scope.isBusy = false
-
 ]
