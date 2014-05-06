@@ -10,8 +10,8 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/userList.html',
-        controller: 'UsersCtrl'
+        templateUrl: 'views/vehicleList.html',
+        controller: 'VehiclesCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
