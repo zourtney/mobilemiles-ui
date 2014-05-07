@@ -6,8 +6,8 @@ app.factory 'authInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, 
 
   request: (config) ->
     config.headers ||= {}
-    if $window.sessionStorage.token
-      config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token
+    if $window.localStorage.token
+      config.headers.Authorization = 'Bearer ' + $window.localStorage.token
     return config
 
   response: (response) ->

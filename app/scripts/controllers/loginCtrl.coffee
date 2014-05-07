@@ -19,12 +19,12 @@ app.controller 'LoginCtrl', ['$scope', '$rootScope', '$location', '$window', 'pr
 
     session.$save()
       .then (data) ->
-        $window.sessionStorage.token = data.token;
+        $window.localStorage.token = data.token;
         $rootScope.session = data.session
         $rootScope.user = data.user
         $location.path(properties.FIRST_PAGE)
       .catch (data) ->
-        delete $window.sessionStorage.token;
+        delete $window.localStorage.token;
         $scope.error = data.data.error
       .finally -> $scope.isBusy = false
 
