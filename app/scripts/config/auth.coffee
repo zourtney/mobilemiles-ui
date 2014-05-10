@@ -17,7 +17,6 @@ app.factory 'authInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, 
 
 }]
 
-
 app.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.interceptors.push('authInterceptor')
 ]
