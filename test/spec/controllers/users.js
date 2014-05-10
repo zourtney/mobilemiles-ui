@@ -17,10 +17,10 @@ describe('Controller: LoginCtrl', function () {
   }));
 
   it('should provide a logIn() function', function () {
-    expect(scope.logIn);
+    expect(LoginCtrl.logIn);
   });
 
   it('should provide a register() function', function () {
-    expect(scope.register);
+    expect(LoginCtrl.register);
   });
 });

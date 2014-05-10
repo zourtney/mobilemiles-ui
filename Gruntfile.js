@@ -372,6 +372,13 @@ module.exports = function (grunt) {
         dest: '.tmp/concat/',
         ext: '.js'
       },
+      test: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/scripts',
+        src: ['**/*.coffee'],
+        dest: '.tmp/scripts',
+        ext: '.js'
+      },
       server: {
         expand: true,
         cwd: '<%= yeoman.app %>/scripts',
@@ -394,6 +401,7 @@ module.exports = function (grunt) {
         'sass:server'
       ],
       test: [
+        'coffee:test',
         'sass'
       ],
       dist: [
