@@ -45,7 +45,7 @@ module.exports = function (grunt) {
       },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffeelint:server', 'coffee:server'],
+        tasks: ['coffeelint:server', 'coffee'],
         options: {
           livereload: true
         }
@@ -364,21 +364,7 @@ module.exports = function (grunt) {
     },
 
     coffee: {
-      dist: {
-        expand: true,
-        cwd: '<%= yeoman.app %>/scripts',
-        src: ['**/*.coffee'],
-        dest: '.tmp/scripts',
-        ext: '.js'
-      },
-      test: {
-        expand: true,
-        cwd: '<%= yeoman.app %>/scripts',
-        src: ['**/*.coffee'],
-        dest: '.tmp/scripts',
-        ext: '.js'
-      },
-      server: {
+      default: {
         expand: true,
         cwd: '<%= yeoman.app %>/scripts',
         src: ['**/*.coffee'],
@@ -396,15 +382,14 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'coffee:server',
+        'coffee',
         'sass:server'
       ],
       test: [
-        'coffee:test',
+        'coffee',
         'sass'
       ],
       dist: [
-        //'coffee:dist',
         'sass:dist',
         'imagemin',
         'svgmin'
@@ -488,7 +473,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'bower:install',
     'bowerInstall',
-    'coffee:dist',
+    'coffee',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
