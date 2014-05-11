@@ -319,7 +319,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '.tmp/concat/scripts',
-          src: '*.js',
+          src: '**/*.js',
           dest: '.tmp/concat/scripts'
         }]
       }
@@ -366,10 +366,9 @@ module.exports = function (grunt) {
     coffee: {
       dist: {
         expand: true,
-        flatten: true,
         cwd: '<%= yeoman.app %>/scripts',
-        src: ['*.coffee'],
-        dest: '.tmp/concat/',
+        src: ['**/*.coffee'],
+        dest: '.tmp/scripts',
         ext: '.js'
       },
       test: {
@@ -405,6 +404,7 @@ module.exports = function (grunt) {
         'sass'
       ],
       dist: [
+        //'coffee:dist',
         'sass:dist',
         'imagemin',
         'svgmin'
@@ -436,6 +436,13 @@ module.exports = function (grunt) {
     // concat: {
     //   dist: {}
     // },
+
+    concat: {
+      dist: {
+        src: ['.tmp/concat/**/*.js'],
+        dest: '<%= yeoman.dist %>/scripts/scripts.js'
+      }
+    },
 
     // Test settings
     karma: {
@@ -481,6 +488,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'bower:install',
     'bowerInstall',
+    'coffee:dist',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
