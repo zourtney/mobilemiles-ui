@@ -78,17 +78,17 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/config/auth.js"></script>
-        <script src="scripts/config/properties.js"></script>
-        <script src="scripts/config/run.js"></script>
-        <script src="scripts/directives/userInfoDirective.js"></script>
-        <script src="scripts/controllers/appCtrl.js"></script>
-        <script src="scripts/controllers/loginCtrl.js"></script>
-        <script src="scripts/controllers/vehicleListCtrl.js"></script>
-        <script src="scripts/controllers/vehicleDetailsCtrl.js"></script>
-        <script src="scripts/services/auth.js"></script>
-        <script src="scripts/services/users.js"></script>
-        <script src="scripts/services/vehicle.js"></script>
+
+        <script src="scripts/auth/authServices.js"></script>
+        <script src="scripts/auth/httpInterceptor.js"></script>
+        <script src="scripts/auth/loginCtrl.js"></script>
+        <script src="scripts/auth/routeInterceptor.js"></script>
+
+        <script src="scripts/users/userService.js"></script>
+
+        <script src="scripts/vehicles/vehicleService.js"></script>
+        <script src="scripts/vehicles/vehicleDetailsCtrl.js"></script>
+        <script src="scripts/vehicles/vehicleListCtrl.js"></script>
         <!-- endbuild -->
 </body>
 </html>

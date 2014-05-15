@@ -9,8 +9,8 @@
 
 
 // Default deployment server
-if (! process.env.SERVER_URL) {
-  process.env.SERVER_URL = 'http://localhost:3000';
+var fallbackEnv = {
+  SERVER_URL: 'http://localhost:3000'
 }
 
 
@@ -45,14 +45,14 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
+        tasks: ['newer:jshint:all', 'replace'],
         options: {
           livereload: true
         }
       },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffeelint:server', 'coffee'],
+        tasks: ['coffeelint:server', 'coffee', 'replace'],
         options: {
           livereload: true
         }
@@ -469,7 +469,7 @@ module.exports = function (grunt) {
         replacements: [{
           from: /<%=\s*process.env.(\w+)\s*%>/g,
           to: function(matchedWord, index, fullText, regexMatches) {
-            return process.env[regexMatches[0]];
+            return process.env[regexMatches[0]] || fallbackEnv[regexMatches[0]];
           }
         }]
       }

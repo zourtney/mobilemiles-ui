@@ -1,11 +1,8 @@
-'use strict'
-
-app = angular.module 'mobilemilesApp'
-
+module = angular.module 'mobilemilesAuth'
 
 # Simple encapsulation of 'token' persistence. Currently just uses
 # the browser's `localStorage`.
-app.factory 'authToken', ['$window', ($window) -> {
+module.factory 'authToken', ['$window', ($window) -> {
   isAuthorized: ->
     return !!$window.localStorage.token
   create: (val) ->
@@ -28,7 +25,7 @@ app.factory 'authToken', ['$window', ($window) -> {
 #    ...
 #
 #    Session.destroy();
-app.factory 'Session', ['$http', '$q', 'properties', 'authToken', ($http, $q, properties, authToken) -> {
+module.factory 'Session', ['$http', '$q', 'properties', 'authToken', ($http, $q, properties, authToken) -> {
 
   isAuthorized: ->
     return authToken.isAuthorized()

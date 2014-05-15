@@ -1,9 +1,6 @@
-'use strict'
+module = angular.module 'mobilemilesAuth'
 
-app = angular.module 'mobilemilesApp'
-
-
-app.factory 'authInterceptor', ['$q', 'authToken', ($q, authToken) -> {
+module.factory 'authInterceptor', ['$q', 'authToken', ($q, authToken) -> {
 
   # Send out auth token in the 'Authorization' header
   request: (config) ->
@@ -30,6 +27,6 @@ app.factory 'authInterceptor', ['$q', 'authToken', ($q, authToken) -> {
 }]
 
 
-app.config ['$httpProvider', ($httpProvider) ->
+module.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.interceptors.push('authInterceptor')
 ]
