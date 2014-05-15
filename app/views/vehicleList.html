@@ -1,9 +1,9 @@
 <h1>Vehicles</h1>
 
 <ul class="resource-list vehicle-list list-unstyled">
-  <li ng-repeat="vehicle in vehicles">
+  <li class="resource" ng-repeat="vehicle in vehicles">
     <h3 ng-show="!!vehicle.name">{{vehicle.name}}</h3>
     <h3 ng-hide="!!vehicle.name">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h3>
-    <span class="created">Created {{created_at | date : 'MM-dd-yyyy'}}</span>
+    <span class="text-muted">Created {{vehicle.created_at | date : 'MM-dd-yyyy'}}</span>
   </li>
 </ul>
