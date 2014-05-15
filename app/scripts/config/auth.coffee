@@ -2,20 +2,21 @@
 
 app = angular.module 'mobilemilesApp'
 
-app.factory 'authInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, $window) -> {
+
+app.factory 'authInterceptor', ['authToken', (authToken) -> {
 
   request: (config) ->
     config.headers ||= {}
-    if $window.localStorage.token
-      config.headers.Authorization = 'Bearer ' + $window.localStorage.token
+    if authToken.isAuthorized()
+      config.headers.Authorization = authToken.getBearerToken()
     return config
 
-  response: (response) ->
+  responseError: (rejection) ->
     if response.status == 401
-      debugger
-    return response || $q.when(response)
+      authToken.destroy()
 
 }]
+
 
 app.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.interceptors.push('authInterceptor')

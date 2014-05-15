@@ -2,8 +2,8 @@
 
 app = angular.module 'mobilemilesApp'
 
-app.run ['$rootScope', '$location', '$window', 'Session', ($rootScope, $location, $window, Session) ->
+app.run ['$rootScope', '$location', 'Session', ($rootScope, $location, Session) ->
   $rootScope.$on '$routeChangeStart', (event, next) ->
-    if (! $rootScope.user && next.templateUrl != 'views/login.html')
-      $location.path('/login')
+    if (! Session.isAuthorized() && next.templateUrl != 'views/login.html')
+     $location.path('/login')
 ]

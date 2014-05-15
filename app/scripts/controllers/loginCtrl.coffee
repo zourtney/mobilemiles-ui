@@ -2,7 +2,7 @@
 
 app = angular.module 'mobilemilesApp'
 
-app.controller 'LoginCtrl', ['$scope', '$rootScope', '$location', '$window', 'properties', 'User', 'Session', ($scope, $rootScope, $location, $window, properties, User, Session) ->
+app.controller 'LoginCtrl', ['$scope', '$location', 'properties', 'User', 'Session', ($scope, $location, properties, User, Session) ->
 
   # Handle 'enter'-key submission from the form (since we can't reliably use
   # the default "first button is the submit button" with all the hiding logic.)
@@ -12,21 +12,14 @@ app.controller 'LoginCtrl', ['$scope', '$rootScope', '$location', '$window', 'pr
   # Attempt to log the user in.
   $scope.logIn = ->
     $scope.isBusy = true
-
-    session = new Session()
-    session.email = $scope.email
-    session.password = $scope.password
-
-    session.$save()
+    debugger
+    Session.create($scope.email, $scope.password)
       .then (data) ->
-        $window.localStorage.token = data.token;
-        $rootScope.session = data.session
-        $rootScope.user = data.user
         $location.path(properties.FIRST_PAGE)
       .catch (data) ->
-        delete $window.localStorage.token;
-        $scope.error = data.data.error
-      .finally -> $scope.isBusy = false
+        $scope.error = data.error.$error
+      .finally ->
+        $scope.isBusy = false
 
   # Attempt to register a new user with the given email and password. If it
   # succeeds, log them in.
