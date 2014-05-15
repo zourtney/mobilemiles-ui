@@ -7,6 +7,13 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+
+// Default deployment server
+if (! process.env.SERVER_URL) {
+  process.env.SERVER_URL = 'http://localhost:3000';
+}
+
+
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -22,8 +29,7 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
-      dist: 'dist',
-      server: process.env.SERVER_URL || 'http://localhost:3000'
+      dist: 'dist'
     },
 
     bower: {
@@ -453,14 +459,18 @@ module.exports = function (grunt) {
     },
 
     replace: {
+      // Insert any environment variables with actual values in the .tmp
+      // directory in the form of '<%= process.env.SOME_VARIABLE %>'
       default: {
         src: [
-          '.tmp/scripts/**/*.js'
+          '.tmp/**/*.js'
         ],
         overwrite: true,
         replacements: [{
-          from: /<%= process.env.SERVER_URL %>/g,
-          to: '<%= yeoman.server %>'
+          from: /<%=\s*process.env.(\w+)\s*%>/g,
+          to: function(matchedWord, index, fullText, regexMatches) {
+            return process.env[regexMatches[0]];
+          }
         }]
       }
     }
