@@ -28,7 +28,25 @@ h1 {
 
 .resource-list {
   .resource {
-    padding: 15px 0;
+    border-top: 1px solid $gray-light;
+
+    h3 {
+      margin-top: 0;
+      color: $brand-primary;
+    }
+
+    & > a {
+      display: block;
+      padding: 15px 10px;
+      text-decoration: none;
+
+      &:hover {
+        background: $gray-lighter;
+      }
+    }
+  }
+
+  .resource:last-child {
     border-bottom: 1px solid $gray;
   }
 }

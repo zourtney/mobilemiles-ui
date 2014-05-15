@@ -2,8 +2,10 @@
 
 <ul class="resource-list vehicle-list list-unstyled">
   <li class="resource" ng-repeat="vehicle in vehicles">
-    <h3 ng-show="!!vehicle.name">{{vehicle.name}}</h3>
-    <h3 ng-hide="!!vehicle.name">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h3>
-    <span class="text-muted">Created {{vehicle.created_at | date : 'MM-dd-yyyy'}}</span>
+    <a ng-href="#/vehicles/{{vehicle.id}}">
+      <h3 ng-show="!!vehicle.name">{{vehicle.name}}</h3>
+      <h3 ng-hide="!!vehicle.name">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h3>
+      <span class="text-muted">Created {{vehicle.created_at | date : 'MM-dd-yyyy'}}</span>
+    </a>
   </li>
 </ul>
