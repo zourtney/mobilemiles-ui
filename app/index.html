@@ -17,14 +17,18 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="mobilemilesApp">
+  <body ng-app="mobilemilesApp" ng-controller="AppCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <div class="navbar navbar-inverse narbar-static-top">
-      <div class="container-fluid">
+      <div class="container">
         <a class="navbar-brand" ng-href="/">Mobilemiles</a>
+
+        <button class="btn btn-default navbar-btn navbar-right" ng-click="logOut()">
+          <i class="fa fa-sign-out"></i> Log out
+        </button>
       </div>
     </div>
 

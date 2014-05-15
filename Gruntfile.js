@@ -345,14 +345,18 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'fonts/*'
+            'images/{,*/}*.{webp}'
           ]
         }, {
           expand: true,
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
+        }, {
+          expand: true,
+          cwd: '.tmp/fonts',
+          dest: '<%= yeoman.dist %>/fonts',
+          src: ['*']
         }]
       },
       styles: {
@@ -360,6 +364,15 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      fonts: {
+        expand: true,
+        flatten: true,
+        src: [
+          '<%= yeoman.app %>/bower_components/bootstrap-sass-official/vendor/assets/fonts/*',
+          '<%= yeoman.app %>/bower_components/font-awesome/fonts/*',
+        ],
+        dest: '.tmp/fonts'
       }
     },
 
@@ -383,7 +396,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee',
-        'sass:server'
+        'sass:server',
+        'copy:fonts'
       ],
       test: [
         'coffee',
@@ -479,6 +493,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'ngmin',
+    'copy:fonts',
     'copy:dist',
     'cdnify',
     'cssmin',

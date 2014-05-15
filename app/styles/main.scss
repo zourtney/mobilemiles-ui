@@ -1,15 +1,14 @@
-$icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
-
+$icon-font-path: '/fonts/';
 @import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
-@import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap/_variables';
 
+$fa-font-path: '/fonts/';
 @import 'font-awesome/scss/font-awesome';
 
 
 // Import our styles
-@import "colors";
-@import "users";
-@import "login";
+@import 'colors';
+@import 'users';
+@import 'login';
 
 
 h1 {
