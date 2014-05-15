@@ -22,7 +22,8 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
-      dist: 'dist'
+      dist: 'dist',
+      server: process.env.SERVER_URL || 'http://localhost:3000'
     },
 
     bower: {
@@ -449,6 +450,19 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+
+    replace: {
+      default: {
+        src: [
+          '.tmp/scripts/**/*.js'
+        ],
+        overwrite: true,
+        replacements: [{
+          from: /<%= process.env.SERVER_URL %>/g,
+          to: '<%= yeoman.server %>'
+        }]
+      }
     }
   });
 
@@ -463,6 +477,7 @@ module.exports = function (grunt) {
       'bower:install',
       'bowerInstall',
       'concurrent:server',
+      'replace',
       'autoprefixer',
       'connect:livereload',
       'watch'
@@ -478,6 +493,7 @@ module.exports = function (grunt) {
     'clean:server',
     'bower:install',
     'concurrent:test',
+    'replace',
     'autoprefixer',
     'connect:test',
     'karma'
@@ -490,6 +506,7 @@ module.exports = function (grunt) {
     'coffee',
     'useminPrepare',
     'concurrent:dist',
+    'replace',
     'autoprefixer',
     'concat',
     'ngmin',
