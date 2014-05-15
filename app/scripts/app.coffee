@@ -23,17 +23,17 @@ app.constant 'properties',
 app.config ($routeProvider) ->
   $routeProvider
     .when '/vehicles',
-      templateUrl: 'views/vehicleList.html',
+      templateUrl: 'views/vehicles/vehicleList.html',
       controller: 'VehicleListCtrl'
 
     .when '/vehicles/:id',
-      templateUrl: 'views/vehicleDetails.html',
+      templateUrl: 'views/vehicles/vehicleDetails.html',
       controller: 'VehicleDetailsCtrl',
       resolve:
         vehicleId: ['$route', ($route) -> $route.current.params.id]
 
     .when '/login',
-      templateUrl: 'views/login.html',
+      templateUrl: 'views/auth/login.html',
       controller: 'LoginCtrl'
   
     .otherwise
