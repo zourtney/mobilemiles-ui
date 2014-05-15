@@ -9,7 +9,7 @@ app.factory 'authToken', ['$window', ($window) -> {
   isAuthorized: ->
     return !!$window.localStorage.token
   create: (val) ->
-    $window.localStorage.token = val
+    if val.token then $window.localStorage.token = val.token
   destroy: ->
     delete $window.localStorage.token
   getBearerToken: ->
@@ -34,19 +34,10 @@ app.factory 'Session', ['$http', '$q', 'properties', 'authToken', ($http, $q, pr
     return authToken.isAuthorized()
   
   create: (email, password) ->
-    deferred = $q.defer()
-
-    credentials = {
+    return $http.post(properties.BASE_URL + '/session/', {
       email: email,
       password: password
-    }
-    $http.post(properties.BASE_URL + '/session/', credentials)
-      .success (data) ->
-        authToken.create(data.token)
-        deferred.resolve(data.token)
-      .error (data) ->
-        authToken.destroy()
-        deferred.reject()
+    })
 
   destroy: ->
     #TODO: invalidate on the server?

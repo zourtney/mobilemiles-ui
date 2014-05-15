@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 app = angular.module 'mobilemilesApp'
 
@@ -12,12 +12,12 @@ app.controller 'LoginCtrl', ['$scope', '$location', 'properties', 'User', 'Sessi
   # Attempt to log the user in.
   $scope.logIn = ->
     $scope.isBusy = true
-    debugger
+
     Session.create($scope.email, $scope.password)
       .then (data) ->
         $location.path(properties.FIRST_PAGE)
       .catch (data) ->
-        $scope.error = data.error.$error
+        $scope.error = data.error
       .finally ->
         $scope.isBusy = false
 
@@ -37,6 +37,8 @@ app.controller 'LoginCtrl', ['$scope', '$location', 'properties', 'User', 'Sessi
     user.$save()
       .then (data) ->
         $scope.logIn()
-      .catch -> $scope.error = 'Unknown error occurred while registering.'
-      .finally -> $scope.isBusy = false
+      .catch ->
+        $scope.error = 'Unknown error occurred while registering.'
+      .finally ->
+        $scope.isBusy = false
 ]
