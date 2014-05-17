@@ -7,13 +7,11 @@ $fa-font-path: '/fonts/';
 
 // Import our styles
 @import 'colors';
-@import 'users';
 @import 'login';
 
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 200;
-  margin-bottom: 20px;
 }
 
 
@@ -25,23 +23,42 @@ h1 {
 }
 
 
+.resource-header {
+  position: relative;
+
+  h3 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .resource-add {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
 
 .resource-list {
+  margin-top: 20px;
+
   .resource {
     border-top: 1px solid $gray-light;
-
-    h3 {
-      margin-top: 0;
-      color: $brand-primary;
-    }
 
     & > a {
       display: block;
       padding: 15px 10px;
       text-decoration: none;
 
+      h3 {
+        margin-top: 0;
+        color: $text-color;
+      }
+
       &:hover {
         background: $gray-lighter;
+        h3 {
+          color: $brand-primary;
+        }
       }
     }
   }

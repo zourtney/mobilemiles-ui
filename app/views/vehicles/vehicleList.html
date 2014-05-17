@@ -1,10 +1,19 @@
-<h1>Vehicles</h1>
+<div class="resource-header">
+  <h1>Vehicles</h1>
+  <a class="btn btn-default resource-add pull-right" ng-href="#/vehicles/new">
+    <i class="fa fa-plus-circle"></i> Create new
+  </a>
+</div>
 
 <ul class="resource-list vehicle-list list-unstyled">
   <li class="resource" ng-repeat="vehicle in vehicles">
     <a ng-href="#/vehicles/{{vehicle.id}}">
-      <h3 ng-show="!!vehicle.name">{{vehicle.name}}</h3>
-      <h3 ng-hide="!!vehicle.name">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h3>
+      <h3 ng-show="!vehicle.name">Unnamed</h3>
+      <h3 ng-hide="!vehicle.name">{{vehicle.name}}</h3>
+
+      <h4 ng-show="!vehicle.year && !vehicle.make && !vehicle.model">Unknown vehicle type</h4>
+      <h4 ng-hide="!vehicle.year && !vehicle.make && !vehicle.model">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
+      
       <span class="text-muted">Created {{vehicle.created_at | date : 'MM-dd-yyyy'}}</span>
     </a>
   </li>

@@ -8,12 +8,6 @@
 // 'test/spec/**/*.js'
 
 
-// Default deployment server
-var fallbackEnv = {
-  SERVER_URL: 'http://localhost:3000'
-}
-
-
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -21,6 +15,11 @@ module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+
+  // Default deployment server
+  var fallbackEnv = {
+    SERVER_URL: 'http://localhost:3000'
+  }
 
   // Define the configuration for all the tasks
   grunt.initConfig({

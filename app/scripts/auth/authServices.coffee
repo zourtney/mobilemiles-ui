@@ -38,5 +38,5 @@ module.factory 'Session', ['$http', '$q', 'properties', 'authToken', ($http, $q,
 
   destroy: ->
     #TODO: invalidate on the server?
-    authToken.destroy();
+    authToken.destroy()
 }]

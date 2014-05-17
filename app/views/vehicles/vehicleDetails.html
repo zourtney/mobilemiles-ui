@@ -1,4 +1,68 @@
-<h1 ng-show="!!vehicle.name">{{vehicle.name}}</h1>
-<h1 ng-hide="!!vehicle.name">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h1>
+<div class="resource-not-found" ng-show="!vehicle">
+  <h1>Vehicle not found</h1>
+</div>
 
-<span class="text-muted">Created {{vehicle.created_at | date : 'MM-dd-yyyy'}}</span>
+<div ng-hide="!vehicle">
+  <div class="resource-header">
+    <h1 ng-show="!vehicle.name">Unnamed</h1>
+    <h1 ng-hide="!vehicle.name">{{vehicle.name}}</h1>
+
+    <h3 ng-show="!vehicle.year && !vehicle.make && !vehicle.model">Unknown vehicle type</h3>
+    <h3 ng-hide="!vehicle.year && !vehicle.make && !vehicle.model">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h3>
+  </div>
+
+  <span class="text-muted">Last modified {{vehicle.updated_at | date : 'MM-dd-yyyy'}}</span>
+
+  <hr />
+
+  <form role="form">
+    <div class="row center-block" ng-hide="!errorMessage">
+      <div class="alert alert-danger col-md-6 col-md-offset-3 alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Error updating vehicle.</strong> {{errorMessage}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="nameInput">Nickname <span class="text-muted">(optional)</span></label>
+        <input type="text" id="nameInput" class="form-control" ng-model="vehicle.name" placeholder="Name" ng-disabled="isBusy()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-2">
+        <label for="yearInput">Year <span class="text-muted">(optional)</span></label>
+        <input type="number" id="yearInput" class="form-control" ng-model="vehicle.year" placeholder="e.g. 2012" ng-disabled="isBusy()">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="makeInput">Make <span class="text-muted">(optional)</span></label>
+        <input type="text" id="makeInput" class="form-control" ng-model="vehicle.make" placeholder="e.g. Ford" ng-disabled="isBusy()">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="modelInput">Model <span class="text-muted">(optional)</span></label>
+        <input type="text" id="modelInput" class="form-control" ng-model="vehicle.model" placeholder="e.g. F-150" ng-disabled="isBusy()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="isBusy()">
+          <span ng-show="isSaving">Saving...</span>
+          <span ng-hide="isSaving">
+            <span ng-show="isNew">Create</span>
+            <span ng-hide="isNew">Save changes</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <hr />
+
+  <div ng-hide="isNew">
+    <p class="text-center">You can delete vehicle and all associated data. Be careful, this can't be undone.</p>
+    <button class="btn btn-danger center-block" ng-click="delete()" ng-disabled="isBusy()">
+      <span ng-show="isDeleting">Deleting...</span>
+      <span ng-hide="isDeleting">Delete vehicle</span>
+    </button>
+  </div>
+</div>
