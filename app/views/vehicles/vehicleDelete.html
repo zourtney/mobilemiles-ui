@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h3 class="modal-title">Delete Vehicle?</h3>
+</div>
+<div class="modal-body">
+  <p>
+    You are about to delete
+    <span ng-show="!vehicle.name">your <span class="text-primary">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</span></span>
+    <span class="text-primary" ng-hide="!vehicle.name">{{vehicle.name}}</span>
+    and all associated records. This action cannot be undone.
+  </p>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-danger" ng-click="ok()">Delete</button>
+</div>

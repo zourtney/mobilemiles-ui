@@ -1,6 +1,6 @@
 angular.module 'mobilemilesUsers', []
 angular.module 'mobilemilesAuth', ['mobilemilesUsers']
-angular.module 'mobilemilesVehicles', []
+angular.module 'mobilemilesVehicles', ['ui.bootstrap']
 
 app = angular.module 'mobilemilesApp', [
   'ngCookies',

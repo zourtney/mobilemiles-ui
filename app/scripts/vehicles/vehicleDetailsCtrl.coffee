@@ -1,8 +1,6 @@
-'use strict';
-
 vehicles = angular.module 'mobilemilesVehicles'
 
-vehicles.controller 'VehicleDetailsCtrl', ['$scope', '$location', 'Vehicle', 'vehicleId', ($scope, $location, Vehicle, vehicleId) ->
+vehicles.controller 'VehicleDetailsCtrl', ['$scope', '$modal', '$location', 'Vehicle', 'vehicleId', ($scope, $modal, $location, Vehicle, vehicleId) ->
   
   # Fetch the existing vehicle, or make a new empty one
   if vehicleId == 'new'
@@ -35,15 +33,22 @@ vehicles.controller 'VehicleDetailsCtrl', ['$scope', '$location', 'Vehicle', 've
         $scope.isSaving = false
 
   # Delete the resource :'( On success, redirect to list page
-  #TODO: um, a confirmation dialog. Because seriously.
   $scope.delete = ->
     $scope.isDeleting = true
 
-    $scope.vehicle.$delete()
+    modalInstance = $modal.open
+      templateUrl: 'views/vehicles/vehicleDelete.html',
+      controller: 'VehicleDeleteCtrl',
+      resolve:
+        vehicle: -> $scope.vehicle
+
+    modalInstance.result
       .then ->
-        $location.path('/vehicles')
-      .catch (data) ->
-        $scope.errorMessage = data.error || 'Unknown error'
+        $scope.vehicle.$delete()
+          .then ->
+            $location.path('/vehicles')
+          .catch (data) ->
+            $scope.errorMessage = data.error || 'Unknown error'
       .finally ->
         $scope.isDeleting = false
 ]
