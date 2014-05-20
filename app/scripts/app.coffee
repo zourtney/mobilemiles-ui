@@ -1,4 +1,10 @@
-angular.module 'mobilemilesUsers', []
+# Constants
+angular.module('mobilemilesConst', []).constant 'properties',
+  BASE_URL: '<%= process.env.SERVER_URL %>',   # environment variable set via grunt
+  FIRST_PAGE: '/vehicles'
+
+
+angular.module 'mobilemilesUsers', ['mobilemilesConst']
 angular.module 'mobilemilesAuth', ['mobilemilesUsers']
 angular.module 'mobilemilesVehicles', ['ui.bootstrap']
 
@@ -7,17 +13,9 @@ app = angular.module 'mobilemilesApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'mobilemilesUsers',
   'mobilemilesAuth',
   'mobilemilesVehicles'
 ]
-
-
-# Contstants
-app.constant 'properties',
-  BASE_URL: '<%= process.env.SERVER_URL %>',   # environment variable set via grunt
-  FIRST_PAGE: '/vehicles'
-
 
 # Set up routes
 app.config ($routeProvider) ->
