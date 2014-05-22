@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="mobilemilesApp" ng-controller="AppCtrl">
+  <body ng-app="mobilemiles.app" ng-controller="AppCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -79,18 +79,26 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/common/module.js"></script>
 
+        <script src="scripts/auth/module.js"></script>
         <script src="scripts/auth/authServices.js"></script>
         <script src="scripts/auth/httpInterceptor.js"></script>
         <script src="scripts/auth/loginCtrl.js"></script>
         <script src="scripts/auth/routeInterceptor.js"></script>
 
+        <script src="scripts/users/module.js"></script>
         <script src="scripts/users/userService.js"></script>
 
+        <script src="scripts/vehicles/module.js"></script>
         <script src="scripts/vehicles/vehicleDelete.js"></script>
         <script src="scripts/vehicles/vehicleDetailsCtrl.js"></script>
         <script src="scripts/vehicles/vehicleListCtrl.js"></script>
         <script src="scripts/vehicles/vehicleService.js"></script>
+
+        <script src="scripts/fillups/module.js"></script>
+        <script src="scripts/fillups/fillupListCtrl.js"></script>
+        <script src="scripts/fillups/fillupService.js"></script>
         <!-- endbuild -->
 </body>
 </html>

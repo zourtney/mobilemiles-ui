@@ -1,7 +1,5 @@
-'use strict'
+module = angular.module 'mobilemiles.vehicles'
 
-vehicles = angular.module 'mobilemilesVehicles'
-
-vehicles.controller 'VehicleListCtrl', ['$scope', 'Vehicle', ($scope, Vehicle) ->
+module.controller 'VehicleListCtrl', ['$scope', 'Vehicle', ($scope, Vehicle) ->
   $scope.vehicles = Vehicle.query()
 ]

@@ -1,4 +1,4 @@
-module = angular.module 'mobilemilesAuth'
+module = angular.module 'mobilemiles.auth'
 
 module.controller 'LoginCtrl', ['$scope', '$location', 'properties', 'User', 'Session', ($scope, $location, properties, User, Session) ->
 

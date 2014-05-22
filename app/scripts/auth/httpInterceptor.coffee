@@ -1,4 +1,4 @@
-module = angular.module 'mobilemilesAuth'
+module = angular.module 'mobilemiles.auth'
 
 module.factory 'authInterceptor', ['$q', 'authToken', ($q, authToken) -> {
 

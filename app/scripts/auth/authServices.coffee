@@ -1,4 +1,4 @@
-module = angular.module 'mobilemilesAuth'
+module = angular.module 'mobilemiles.auth'
 
 # Simple encapsulation of 'token' persistence. Currently just uses
 # the browser's `localStorage`.

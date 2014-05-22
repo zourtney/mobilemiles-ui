@@ -1,6 +1,6 @@
-vehicles = angular.module 'mobilemilesVehicles'
+module = angular.module 'mobilemiles.vehicles'
 
-vehicles.controller 'VehicleDetailsCtrl', ['$scope', '$modal', '$location', 'Vehicle', 'vehicleId', ($scope, $modal, $location, Vehicle, vehicleId) ->
+module.controller 'VehicleDetailsCtrl', ['$scope', '$modal', '$location', 'Vehicle', 'vehicleId', ($scope, $modal, $location, Vehicle, vehicleId) ->
   
   # Fetch the existing vehicle, or make a new empty one
   if vehicleId == 'new'
