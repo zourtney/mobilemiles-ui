@@ -1,0 +1,89 @@
+<div class="resource-not-found" ng-show="!fillup">
+  <h1>Fill-up not found</h1>
+</div>
+
+<div ng-hide="!fillup">
+  <div class="resource-header">
+    <h1>Fill-up {{fillup.name}}</h1>
+    <h3>
+      for
+      <span ng-show="!fillup.vehicle.name">unnamed</span>
+      <span ng-hide="!fillup.vehicle.name">{{fillup.vehicle.name}}</span>
+      {{fillup.vehicle.year}} {{fillup.vehicle.make}} {{fillup.vehicle.model}}
+    </h3>
+  </div>
+
+  <span class="text-muted">Filled up at {{fillup.completed_at | date : 'MM-dd-yyyy'}}</span>
+
+  <hr />
+
+  <form role="form">
+    <div class="row center-block" ng-hide="!errorMessage">
+      <div class="alert alert-danger col-md-6 col-md-offset-3 alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Error updating fill-up.</strong> {{errorMessage}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for="vehicleSelect">Vehicle</label>
+        <select id="vehicleSelect" class="form-control" ng-model="fillup.vehicle" ng-options="v.name for v in vehicles" ng-disabled="isBusy()" /></select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-2">
+        <label for="mileageInput">Mileage</label>
+        <input type="number" id="mileageInput" class="form-control" ng-model="fillup.mileage" placeholder="208120" ng-disabled="isBusy()" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-2">
+        <label for="gallonsInput">Gallons</label>
+        <input type="number" id="gallonsInput" class="form-control" ng-model="fillup.gallons" placeholder="15.154" ng-disabled="isBusy()" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for="gradeSelect">Grade</label>
+        <select id="gradeSelect" class="form-control" ng-model="fillup.grade" ng-options="g for g in grades" ng-disabled="isBusy()" /></select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-2">
+        <label for="ppgInput">Price per gallon</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input type="number" id="ppgInput" class="form-control" ng-model="fillup.price_per_gallon" placeholder="3.24" ng-disabled="isBusy()" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-8">
+        <label for="commentInput">Comment <span class="text-muted">(optional)</span></label>
+        <textarea class="form-control" id="commentInput" ng-model="fillup.comment" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="isBusy()">
+          <span ng-show="isSaving">Saving...</span>
+          <span ng-hide="isSaving">
+            <span ng-show="isNew">Create</span>
+            <span ng-hide="isNew">Save changes</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <hr />
+
+  <div ng-hide="isNew">
+    <p class="text-center">Done with this vehicle forever? You can delete it.</p>
+    <button class="btn btn-danger center-block" ng-click="delete()" ng-disabled="isBusy()">
+      <span ng-show="isDeleting">Deleting...</span>
+      <span ng-hide="isDeleting">Delete vehicle</span>
+    </button>
+  </div>
+</div>
