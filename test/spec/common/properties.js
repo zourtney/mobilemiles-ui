@@ -1,7 +1,9 @@
+'use strict';
+
 describe('Properties', function() {
   var props;
 
-  beforeEach(module('mobilemilesConst'));
+  beforeEach(module('mobilemiles.common'));
 
   beforeEach(inject(function(properties) {
     props = properties;
@@ -16,7 +18,7 @@ describe('Properties', function() {
   });
 
   it('should contain a FIRST_PAGE property', function() {
-    expect(props.FIRST_PAGE).toBeDefined()
+    expect(props.FIRST_PAGE).toBeDefined();
     expect(props.FIRST_PAGE).toContain('/');
   });
 });

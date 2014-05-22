@@ -1,7 +1,9 @@
+'use strict';
+
 describe('Auth token', function() {
   var authToken;
 
-  beforeEach(module('mobilemilesAuth'));
+  beforeEach(module('mobilemiles.auth'));
 
   beforeEach(inject(['authToken', function(a) {
     authToken = a;
