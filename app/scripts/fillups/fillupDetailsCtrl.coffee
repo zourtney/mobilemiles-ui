@@ -1,9 +1,9 @@
 module = angular.module 'mobilemiles.fillups'
 
-module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Vehicle, Fillup,  fillupId) ->
+module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grades', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Grades, Vehicle, Fillup,  fillupId) ->
 
   $scope.vehicles = Vehicle.query();
-  $scope.grades = ['Regular', 'Plus', 'Premium']
+  $scope.grades = Grades.query();
   
   # Fetch the existing vehicle, or make a new empty one
   if fillupId == 'new'

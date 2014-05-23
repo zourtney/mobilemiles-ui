@@ -4,8 +4,10 @@
 
 <div ng-hide="!fillup">
   <div class="resource-header">
-    <h1>Fill-up {{fillup.name}}</h1>
-    <h3>
+    <h1 ng-show="isNew">New fill-up</h1>
+    <h1 ng-hide="isNew">Fill-up {{fillup.name}}</h1>
+    <h3 ng-show="!fillup.vehicle" class="text-muted">No vehicle selected</h3>
+    <h3 ng-hide="!fillup.vehicle">
       for
       <span ng-show="!fillup.vehicle.name">unnamed</span>
       <span ng-hide="!fillup.vehicle.name">{{fillup.vehicle.name}}</span>
@@ -13,7 +15,7 @@
     </h3>
   </div>
 
-  <span class="text-muted">Filled up at {{fillup.completed_at | date : 'MM-dd-yyyy'}}</span>
+  <span class="text-muted" ng-hide="isNew">Filled up at {{fillup.completed_at | date : 'MM-dd-yyyy'}}</span>
 
   <hr />
 
@@ -44,18 +46,16 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-3">
-        <label for="gradeSelect">Grade</label>
-        <select id="gradeSelect" class="form-control" ng-model="fillup.grade" ng-options="g for g in grades" ng-disabled="isBusy()"></select>
-      </div>
-    </div>
-    <div class="row">
       <div class="form-group col-sm-2">
         <label for="ppgInput">Price per gallon</label>
         <div class="input-group">
           <span class="input-group-addon">$</span>
           <input type="number" id="ppgInput" class="form-control" ng-model="fillup.price_per_gallon" placeholder="3.24" ng-disabled="isBusy()" />
         </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="gradeSelect">Grade</label>
+        <select id="gradeSelect" class="form-control" ng-model="fillup.grade" ng-options="g.name for g in grades" ng-disabled="isBusy()" placeholder="Grade"></select>
       </div>
     </div>
     <div class="row">
