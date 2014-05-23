@@ -8,7 +8,10 @@
 <ul class="resource-list fillup-list list-unstyled">
   <li class="resource" ng-repeat="fillup in fillups">
     <a ng-href="#/fillups/{{fillup.id}}">
-      {{fillup}}
+      <h3 ng-show="!fillup.name">${{fillup.price}} <span ng-show="!!fillup.grade">of {{fillup.grade}}</span></h3>
+      <h3 ng-hide="!fillup.name">{{fillup.name}}</h3>
+
+      <h4>Filled up {{fillup.completed_at | date : 'MM-dd-yyyy h:mma'}}</h4>
     </a>
   </li>
 </ul>

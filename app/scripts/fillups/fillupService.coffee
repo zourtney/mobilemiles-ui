@@ -7,7 +7,7 @@ module.factory 'Fillup', ['$resource', 'properties', ($resource, properties) ->
   )
 ]
 
-module.factory 'Grades', ->
+module.factory 'Grade', ->
   query = -> [
     { name: 'Regular', val: 'regular' },
     { name: 'Plus', val: 'plus' },

@@ -6,12 +6,12 @@
   <div class="resource-header">
     <h1 ng-show="isNew">New fill-up</h1>
     <h1 ng-hide="isNew">Fill-up {{fillup.name}}</h1>
-    <h3 ng-show="!fillup.vehicle" class="text-muted">No vehicle selected</h3>
-    <h3 ng-hide="!fillup.vehicle">
+    <h3 ng-show="!vehicle" class="text-muted">No vehicle selected</h3>
+    <h3 ng-hide="!vehicle">
       for
-      <span ng-show="!fillup.vehicle.name">unnamed</span>
-      <span ng-hide="!fillup.vehicle.name">{{fillup.vehicle.name}}</span>
-      {{fillup.vehicle.year}} {{fillup.vehicle.make}} {{fillup.vehicle.model}}
+      <span ng-show="!vehicle.name">unnamed</span>
+      <span ng-hide="!vehicle.name">{{vehicle.name}}</span>
+      {{vehicle.year}} {{vehicle.make}} {{vehicle.model}}
     </h3>
   </div>
 
@@ -30,19 +30,21 @@
     <div class="row">
       <div class="form-group col-md-3">
         <label for="vehicleSelect">Vehicle</label>
-        <select id="vehicleSelect" class="form-control" ng-model="fillup.vehicle" ng-options="v.name for v in vehicles" ng-disabled="isBusy()"></select>
+        <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name for v in vehicles" ng-value="" ng-disabled="isBusy()">
+          <option value="" disabled="disabled">Select vehicle</option>
+        </select>
       </div>
     </div>
     <div class="row">
       <div class="form-group col-sm-2">
         <label for="mileageInput">Mileage</label>
-        <input type="number" id="mileageInput" class="form-control" ng-model="fillup.mileage" placeholder="208120" ng-disabled="isBusy()" />
+        <input type="number" id="mileageInput" class="form-control" ng-model="fillup.mileage" ng-disabled="isBusy()" />
       </div>
     </div>
     <div class="row">
       <div class="form-group col-sm-2">
         <label for="gallonsInput">Gallons</label>
-        <input type="number" id="gallonsInput" class="form-control" ng-model="fillup.gallons" placeholder="15.154" ng-disabled="isBusy()" />
+        <input type="number" id="gallonsInput" class="form-control" ng-model="fillup.gallons" ng-change="updatePrice()" ng-disabled="isBusy()" />
       </div>
     </div>
     <div class="row">
@@ -50,12 +52,29 @@
         <label for="ppgInput">Price per gallon</label>
         <div class="input-group">
           <span class="input-group-addon">$</span>
-          <input type="number" id="ppgInput" class="form-control" ng-model="fillup.price_per_gallon" placeholder="3.24" ng-disabled="isBusy()" />
+          <input type="number" id="ppgInput" class="form-control" ng-model="fillup.price_per_gallon" ng-change="updatePrice()" ng-disabled="isBusy()" />
         </div>
       </div>
       <div class="form-group col-md-2">
         <label for="gradeSelect">Grade</label>
-        <select id="gradeSelect" class="form-control" ng-model="fillup.grade" ng-options="g.name for g in grades" ng-disabled="isBusy()" placeholder="Grade"></select>
+        <select id="gradeSelect" class="form-control" ng-model="fillup.grade" ng-options="g.val as g.name for g in grades" ng-disabled="isBusy()" placeholder="Grade">
+          <option value="">Unspecified grade</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-2">
+        <label for="priceInput">Total cost</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input type="number" id="priceInput" class="form-control" ng-model="fillup.price" ng-disabled="isBusy() || autoCalcPrice" />
+        </div>
+      </div>
+      <div class="checkbox with-label col-sm-3">
+        <label>
+          <input type="checkbox" ng-model="autoCalcPrice" ng-change="updatePrice()" />
+          Auto-calculate
+        </label>
       </div>
     </div>
     <div class="row">
@@ -80,10 +99,10 @@
   <hr />
 
   <div ng-hide="isNew">
-    <p class="text-center">Done with this vehicle forever? You can delete it.</p>
+    <p class="text-center">Done with this fill-up entry? You can delete it.</p>
     <button class="btn btn-danger center-block" ng-click="delete()" ng-disabled="isBusy()">
       <span ng-show="isDeleting">Deleting...</span>
-      <span ng-hide="isDeleting">Delete vehicle</span>
+      <span ng-hide="isDeleting">Delete fill-up entry</span>
     </button>
   </div>
 </div>
