@@ -1,6 +1,4 @@
-<div class="fullscreen">
-  <div class="road"></div>
-</div>
+<div class="road"></div>
 
 <form role="form" class="login-form" ng-class="registerMode ? 'register' : 'login'; isBusy ? 'busy' : '';">
 
@@ -26,9 +24,14 @@
     <input type="password" class="form-control" id="loginPasswordConfirm" ng-model="passwordConfirm" placeholder="Confirm password" ng-disabled="isBusy">
   </div>
 
-  <div class="actions">
+  <!-- Form actions -->
+  <div class="pull-left">
+    <a class="btn btn-link guest-login" ng-click="logInAsGuest()">Log in as guest</a>
+  </div>
+
+  <div class="pull-right">
     <input type="submit" class="hidden" ng-click="onSubmit()" />
-    <button class="btn btn-link register" ng-click="registerMode = true" ng-hide="registerMode">Sign up</button>
+    <button class="btn btn-link" ng-click="registerMode = true" ng-hide="registerMode">Sign up</button>
     <button class="btn btn-link" ng-click="registerMode = false" ng-show="registerMode">Back to login</button>
     <button class="btn btn-primary" ng-click="logIn()" ng-hide="registerMode" ng-disabled="isBusy">
       <span ng-show="isBusy"><i class="fa fa-spinner fa-spin"></i> Logging in...</span>

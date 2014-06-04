@@ -1,6 +1,19 @@
 module = angular.module 'mobilemiles.auth'
 
-module.controller 'LoginCtrl', ['$scope', '$location', 'properties', 'User', 'Session', ($scope, $location, properties, User, Session) ->
+module.controller 'LoginCtrl', ['$scope', '$rootScope', '$location', 'properties', 'User', 'Session', ($scope, $rootScope, $location, properties, User, Session) ->
+
+  $rootScope.isFullscreen = true;
+
+  doLogIn = (email, password) ->
+    $scope.isBusy = true
+
+    Session.create(email, password)
+      .then (data) ->
+        $location.path(properties.FIRST_PAGE)
+      .catch (data) ->
+        $scope.error = data.error || 'Unable to connect to server'
+      .finally ->
+        $scope.isBusy = false
 
   # Handle 'enter'-key submission from the form (since we can't reliably use
   # the default "first button is the submit button" with all the hiding logic.)
@@ -9,15 +22,10 @@ module.controller 'LoginCtrl', ['$scope', '$location', 'properties', 'User', 'Se
 
   # Attempt to log the user in.
   $scope.logIn = ->
-    $scope.isBusy = true
+    doLogIn($scope.email, $scope.password)
 
-    Session.create($scope.email, $scope.password)
-      .then (data) ->
-        $location.path(properties.FIRST_PAGE)
-      .catch (data) ->
-        $scope.error = data.error
-      .finally ->
-        $scope.isBusy = false
+  $scope.logInAsGuest = ->
+    doLogIn('guest@example.com', 'guest123')
 
   # Attempt to register a new user with the given email and password. If it
   # succeeds, log them in.

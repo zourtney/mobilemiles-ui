@@ -1,9 +1,5 @@
-.fullscreen {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+body.fullscreen {
+  height: 100%;
   background: $login-body-bg;
 }
 
@@ -45,9 +41,8 @@
     text-align: right;
     margin: -15px 0 20px 0;
   }
-
-  .actions {
-    float: right;
+  .guest-login {
+    padding-left: 0;   // left-align button text with the inputs
   }
 }
 
@@ -59,7 +54,7 @@
 
 
 .password-confirmation {
-  transition: all linear 0.1s;
+  //transition: all linear 0.1s;   //TODO: investigate. Was leaving "streaks" from the bottom border.
   display: block !important;
   overflow: hidden;
   height: 58px;
