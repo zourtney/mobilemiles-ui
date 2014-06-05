@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h3 class="modal-title">Delete fill-up?</h3>
+</div>
+<div class="modal-body">
+  <p>
+    You are about to delete the fill-up entry generated on <span class="text-primary">{{fillup.completed_at | date}}</span>. This action cannot be undone.
+  </p>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-danger" ng-click="ok()">Delete</button>
+</div>

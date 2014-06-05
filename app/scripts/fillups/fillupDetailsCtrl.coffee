@@ -47,23 +47,23 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
       .finally ->
         $scope.isSaving = false
 
-  # Delete the resource :'( On success, redirect to list page
-  # $scope.delete = ->
-  #   $scope.isDeleting = true
+  # Delete the resource
+  $scope.delete = ->
+    $scope.isDeleting = true
 
-  #   modalInstance = $modal.open
-  #     templateUrl: 'views/fillups/vehicleDelete.html',
-  #     controller: 'VehicleDeleteCtrl',
-  #     resolve:
-  #       vehicle: -> $scope.vehicle
+    modalInstance = $modal.open
+      templateUrl: 'views/fillups/fillupDelete.html',
+      controller: 'FillupDeleteCtrl',
+      resolve:
+        fillup: -> $scope.fillup
 
-  #   modalInstance.result
-  #     .then ->
-  #       $scope.vehicle.$delete()
-  #         .then ->
-  #           $location.path('/vehicles')
-  #         .catch (data) ->
-  #           $scope.errorMessage = data.error || 'Unknown error'
-  #     .finally ->
-  #       $scope.isDeleting = false
+    modalInstance.result
+      .then ->
+        $scope.fillup.$delete()
+          .then ->
+            $location.path('/fillups')
+          .catch (data) ->
+            $scope.errorMessage = data.error || 'Unknown error'
+      .finally ->
+        $scope.isDeleting = false
 ]
