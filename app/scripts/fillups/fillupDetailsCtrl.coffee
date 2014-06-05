@@ -2,7 +2,6 @@ module = angular.module 'mobilemiles.fillups'
 
 module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Grade, Vehicle, Fillup,  fillupId) ->
 
-  $scope.autoCalcPrice = true
   $scope.vehicles = Vehicle.query()
   $scope.grades = Grade.query()
   
@@ -10,11 +9,13 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
   if fillupId == 'new'
     $scope.isNew = true
     $scope.fillup = new Fillup()
+    $scope.autoCalcPrice = true
   else
     Fillup.get({ id: fillupId }).$promise
       .then (data) ->
         $scope.fillup = data
         $scope.vehicle = Vehicle.get({ id: data.vehicle_id })
+        $scope.autoCalcPrice = $scope.fillup.price == getAutoCalcPrice()
       .catch (data) ->
         $scope.fillup = null
 
@@ -23,9 +24,12 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
     return $scope.isSaving || $scope.isDeleting
 
   # Auto-calculate the price (round to 2 decimal places)
+  getAutoCalcPrice = ->
+    Math.ceil($scope.fillup.gallons * $scope.fillup.price_per_gallon * 100) / 100
+
   $scope.updatePrice = ->
     if $scope.autoCalcPrice
-      $scope.fillup.price = Math.ceil($scope.fillup.gallons * $scope.fillup.price_per_gallon * 100) / 100
+      $scope.fillup.price = getAutoCalcPrice()
 
   # Create or update the resource on the server
   $scope.save = ->
