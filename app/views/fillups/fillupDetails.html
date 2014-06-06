@@ -15,7 +15,8 @@
     </h3>
   </div>
 
-  <span class="text-muted" ng-hide="isNew">Filled up at {{fillup.completed_at | date : 'MM-dd-yyyy'}}</span>
+  <span class="text-muted" ng-hide="isNew">Filled up at {{fillup.completed_at | date : 'MM-dd-yyyy hh:mma'}}</span>
+  <button class="btn btn-link" ng-click="changeTime()">change</button>
 
   <hr />
 

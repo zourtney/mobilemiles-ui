@@ -2,6 +2,7 @@ module = angular.module 'mobilemiles.fillups'
 
 module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Grade, Vehicle, Fillup,  fillupId) ->
 
+  $scope.isSettingTime = false
   $scope.vehicles = Vehicle.query()
   $scope.grades = Grade.query()
   
@@ -19,9 +20,11 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
       .catch (data) ->
         $scope.fillup = null
 
+
   # Convenience function for telling the state of in-progress AJAX requests
   $scope.isBusy = ->
-    return $scope.isSaving || $scope.isDeleting
+    return $scope.isSaving || $scope.isDeleting || $scope.isSettingTime
+
 
   # Auto-calculate the price (round to 2 decimal places)
   getAutoCalcPrice = ->
@@ -30,6 +33,7 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
   $scope.updatePrice = ->
     if $scope.autoCalcPrice
       $scope.fillup.price = getAutoCalcPrice()
+
 
   # Create or update the resource on the server
   $scope.save = ->
@@ -47,7 +51,8 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
       .finally ->
         $scope.isSaving = false
 
-  # Delete the resource
+
+  # Show the "delete" modal
   $scope.delete = ->
     $scope.isDeleting = true
 
@@ -66,4 +71,25 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
             $scope.errorMessage = data.error || 'Unknown error'
       .finally ->
         $scope.isDeleting = false
+
+
+  # Show the "change time" modal
+  $scope.changeTime = ->
+    modalInstance = $modal.open
+      templateUrl: 'views/fillups/fillupChangeTime.html',
+      controller: 'FillupChangeTimeCtrl',
+      resolve:
+        fillup: -> $scope.fillup
+
+    modalInstance.result
+      .then ->
+        $scope.isSaving = true
+        $scope.fillup.$update()
+          .then ->
+            $scope.isNew = false
+          .catch (data) ->
+            $scope.errorMessage = data.error || 'Unknown error'
+          .finally ->
+            $scope.isSaving = false
+
 ]
