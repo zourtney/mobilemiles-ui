@@ -7,17 +7,17 @@
     <div class="form-group">
       <label>Date</label>
       <div>
-        <select ng-model="month" ng-options="val for val in months" class="form-control inline"></select>
-        <select ng-model="day" ng-options="val for val in days" class="form-control inline"></select>
-        <select ng-model="year" ng-options="val for val in years" class="form-control inline"></select>
+        <select ng-model="completedAt.month" ng-options="val for val in months" class="form-control inline"></select>
+        <select ng-model="completedAt.day" ng-options="val for val in days" class="form-control inline"></select>
+        <select ng-model="completedAt.year" ng-options="val for val in years" class="form-control inline"></select>
       </div>
     </div>
     <div class="form-group">
       <label>Time</label>
       <div>
-        <select ng-model="hour" ng-options="val for val in hours" class="form-control inline"></select> :
-        <select ng-model="minute" ng-options="val for val in minutes" class="form-control inline"></select>
-        <select ng-model="isPm" ng-options="val for val in amPm" class="form-control inline"></select>
+        <select ng-model="completedAt.hour" ng-options="val for val in hours" class="form-control inline"></select> :
+        <select ng-model="completedAt.minute" ng-options="val for val in minutes" class="form-control inline"></select>
+        <select ng-model="completedAt.isPm" ng-options="val for val in amPm" class="form-control inline"></select>
       </div>
     </div>
   </form>

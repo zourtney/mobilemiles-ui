@@ -13,13 +13,15 @@ module.controller 'FillupChangeTimeCtrl', ['$scope', '$modalInstance', 'fillup',
   $scope.amPm = ['AM', 'PM']
 
   # Set components
-  # completedAt = new Date($scope.fillup.completed_at)
-  # $scope.day = completedAt.getDate();
-  # $scope.month = $scope.months[completedAt.getMonth()]
-  # $scope.year = completedAt.getFullYear()
-  # $scope.hour = completedAt.getHours() % 12
-  # $scope.minute = completedAt.getMinutes()
-  # $scope.isPm = $scope.amPm[if completedAt.getHours() < 12 then 0 else 1]
+  completedAt = new Date($scope.fillup.completed_at)
+  $scope.completedAt = {
+    day: completedAt.getDate();
+    month: $scope.months[completedAt.getMonth()]
+    year: completedAt.getFullYear()
+    hour: completedAt.getHours() % 12
+    minute: completedAt.getMinutes()
+    isPm: $scope.amPm[if completedAt.getHours() < 12 then 0 else 1]
+  }
   
   $scope.cancel = ->
     $modalInstance.dismiss('cancel')
@@ -27,13 +29,12 @@ module.controller 'FillupChangeTimeCtrl', ['$scope', '$modalInstance', 'fillup',
   $scope.ok = ->
     # Update the model, then return
     $scope.fillup.completed_at = new Date(
-      $scope.year,
-      $scope.months.indexOf($scope.month),
-      $scope.day,
-      $scope.hour + (if $scope.isPm then 12 else 0),
-      $scope.minute
+      $scope.completedAt.year,
+      $scope.months.indexOf($scope.completedAt.month),
+      $scope.completedAt.day,
+      $scope.completedAt.hour + (if $scope.completedAt.isPm == 'PM' then 12 else 0),
+      $scope.completedAt.minute
     ).getTime()
-    console.log($scope.year, $scope.month, $scope.day, new Date($scope.fillup.completed_at))
-    #$modalInstance.close()
+    $modalInstance.close()
 
 ]
