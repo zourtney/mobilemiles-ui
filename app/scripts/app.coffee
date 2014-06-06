@@ -14,7 +14,7 @@ app = angular.module 'mobilemiles.app', [
 app.config ($routeProvider) ->
   $routeProvider
     .otherwise
-      redirectTo: '/vehicles'
+      redirectTo: '/fillups'
 
 
 # High-level application controller. Use this to do define app-wide functions
