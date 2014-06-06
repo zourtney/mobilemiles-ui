@@ -36,9 +36,12 @@
 
         <div class="collapse navbar-collapse" id="mobilemiles-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li><a ng-href="#vehicles">Vehicles</a></li>
-            <li><a ng-href="#fillups">Fill-ups</a></li>
-            <li><a ng-click="logOut()"><i class="fa fa-sign-out"></i> Log out</a></li>
+            <li ng-repeat="link in navLinks | orderBy : 'position'">
+              <a ng-href="{{link.url}}" ng-click="link.click()">
+                <span ng-hide="!link.icon"><i class="{{link.icon}}"></i></span>
+                <span ng-hide="!link.title">{{link.title}}</span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>

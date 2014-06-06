@@ -6,6 +6,7 @@ module = angular.module 'mobilemiles.fillups', [
   'mobilemiles.vehicles'
 ]
 
+# Define routes
 module.config ($routeProvider) ->
   $routeProvider.when '/fillups',
     templateUrl: 'views/fillups/fillupList.html',
@@ -16,3 +17,10 @@ module.config ($routeProvider) ->
     controller: 'FillupDetailsCtrl',
     resolve:
       fillupId: ['$route', ($route) -> $route.current.params.id]
+
+# Add route to global nav links
+module.run ($rootScope) ->
+  ($rootScope.navLinks || = []).push
+    title: 'Fill-ups',
+    url: '#fillups',
+    position: 1

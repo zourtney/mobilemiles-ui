@@ -18,8 +18,7 @@ app.config ($routeProvider) ->
 
 
 # High-level application controller. Use this to do define app-wide functions
-# and scope variables.
+# and scope variables. (Use as minimally as possible)
 app.controller 'AppCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
-  $scope.logOut = ->
-    $rootScope.$broadcast('logOut')
+  
 ]
