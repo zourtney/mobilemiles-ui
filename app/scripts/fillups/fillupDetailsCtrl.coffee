@@ -43,8 +43,8 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
 
     $scope.fillup[method]()
       .then ->
-        # if $scope.isNew
-        #   $location.path('/fillups/' + $scope.fillup.id)
+        if $scope.isNew
+          $location.path('/fillups/' + $scope.fillup.id)
         $scope.isNew = false
       .catch (data) ->
         $scope.errorMessage = data.error || 'Unknown error'
