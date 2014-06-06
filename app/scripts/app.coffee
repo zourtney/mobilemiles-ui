@@ -10,7 +10,7 @@ app = angular.module 'mobilemiles.app', [
   'mobilemiles.fillups'
 ]
 
-# Set up routes
+# Set up default route. Actual routes are defined by modules.
 app.config ($routeProvider) ->
   $routeProvider
     .otherwise
