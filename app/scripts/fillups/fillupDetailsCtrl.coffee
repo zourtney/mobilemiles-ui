@@ -31,7 +31,7 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
   # list. This is necessary for the dropdown to select the proper item.
   $scope.$watchCollection '[fillup, vehicles]', ->
     if $scope.fillup and $scope.vehicles
-      $scope.vehicle = _.findWhere($scope.vehicles, {id: $scope.fillup.vehicle_id})
+      $scope.vehicle = _.find($scope.vehicles, {id: $scope.fillup.vehicle_id})
 
 
   # Convenience function for telling the state of in-progress AJAX requests

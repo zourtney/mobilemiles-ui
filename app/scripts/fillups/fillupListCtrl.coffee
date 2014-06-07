@@ -1,5 +1,13 @@
 fillups = angular.module 'mobilemiles.fillups'
 
-fillups.controller 'FillupListCtrl', ['$scope', 'Fillup', ($scope, Fillup) ->
-  $scope.fillups = Fillup.query()
+fillups.controller 'FillupListCtrl', ['$scope', 'Vehicle', 'Fillup', ($scope, Vehicle, Fillup) ->
+
+  # Put the full `vehicle` instance on each fillup.
+  resolveVehicles = ->
+    if $scope.fillups and $scope.vehicles
+      _.each $scope.fillups, (f) ->
+        f.vehicle = _.find($scope.vehicles, {id: f.vehicle_id})
+
+  $scope.fillups = Fillup.query(resolveVehicles)
+  $scope.vehicles = Vehicle.query(resolveVehicles)
 ]

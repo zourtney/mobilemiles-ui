@@ -11,7 +11,11 @@
       <h3 ng-show="!fillup.name">${{fillup.price}} <span ng-show="!!fillup.grade">of {{fillup.grade}}</span></h3>
       <h3 ng-hide="!fillup.name">{{fillup.name}}</h3>
 
-      <h4>Filled up {{fillup.completed_at | date : 'MM-dd-yyyy h:mma'}}</h4>
+      <h4>Filled up
+        <span ng-hide="!fillup.vehicle.name">{{fillup.vehicle.name}}</span>
+        <span ng-show="!fillup.vehicle.name">{{fillup.vehicle.year}} {{fillup.vehicle.make}} {{fillup.vehicle.model}}</span>
+        at {{fillup.completed_at | date : 'MM-dd-yyyy h:mma'}}
+      </h4>
     </a>
   </li>
 </ul>
