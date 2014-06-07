@@ -5,8 +5,15 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
   $scope.isSettingTime = false
   $scope.vehicles = Vehicle.query()
   $scope.grades = Grade.query()
+
+
+  # Handle Bootstrap UI alert close events
+  $scope.alerts = []
+  $scope.closeAlert = (index) ->
+    $scope.alerts.splice(index, 1)
   
-  # Fetch the existing vehicle, or make a new empty one
+
+  # Fetch the existing fillup, or make a new empty one
   if fillupId == 'new'
     $scope.isNew = true
     $scope.fillup = new Fillup()
@@ -15,10 +22,16 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
     Fillup.get({ id: fillupId }).$promise
       .then (data) ->
         $scope.fillup = data
-        $scope.vehicle = Vehicle.get({ id: data.vehicle_id })
         $scope.autoCalcPrice = $scope.fillup.price == getAutoCalcPrice()
       .catch (data) ->
         $scope.fillup = null
+
+  # When the fillup AND vehicles list are present, set `$scope.vehicle`. Note
+  # that `$scope.vehicle` is a reference to an item in the `$scope.vehicles`
+  # list. This is necessary for the dropdown to select the proper item.
+  $scope.$watchCollection '[fillup, vehicles]', ->
+    if $scope.fillup and $scope.vehicles
+      $scope.vehicle = _.findWhere($scope.vehicles, {id: $scope.fillup.vehicle_id})
 
 
   # Convenience function for telling the state of in-progress AJAX requests
@@ -37,19 +50,26 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
 
   # Create or update the resource on the server
   $scope.save = ->
-    $scope.isSaving = true
-    $scope.fillup.vehicle_id = $scope.vehicle.id
-    method = if $scope.isNew then '$save' else '$update'
+    if not $scope.vehicle
+      $scope.alerts.push
+        type: 'warning',
+        msg: 'You must select a vehicle.'
+    else
+      $scope.isSaving = true
+      $scope.fillup.vehicle_id = $scope.vehicle.id
+      method = if $scope.isNew then '$save' else '$update'
 
-    $scope.fillup[method]()
-      .then ->
-        if $scope.isNew
-          $location.path('/fillups/' + $scope.fillup.id)
-        $scope.isNew = false
-      .catch (data) ->
-        $scope.errorMessage = data.error || 'Unknown error'
-      .finally ->
-        $scope.isSaving = false
+      $scope.fillup[method]()
+        .then ->
+          if $scope.isNew
+            $location.path('/fillups/' + $scope.fillup.id)
+          $scope.isNew = false
+        .catch (data) ->
+          $scope.alerts.push
+            type: 'danger',
+            msg: data.error || 'Unknown error'
+        .finally ->
+          $scope.isSaving = false
 
 
   # Show the "delete" modal
@@ -68,7 +88,9 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
           .then ->
             $location.path('/fillups')
           .catch (data) ->
-            $scope.errorMessage = data.error || 'Unknown error'
+            $scope.alerts.push
+              type: 'danger',
+              msg: data.error || 'Unknown error'
       .finally ->
         $scope.isDeleting = false
 
@@ -81,14 +103,17 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
       resolve:
         fillup: -> $scope.fillup
 
-    modalInstance.result
-      .then ->
+    modalInstance.result.then (newTimestamp) ->
+      $scope.fillup.completed_at = newTimestamp
+      if not $scope.isNew
         $scope.isSaving = true
         $scope.fillup.$update()
           .then ->
             $scope.isNew = false
           .catch (data) ->
-            $scope.errorMessage = data.error || 'Unknown error'
+            $scope.alerts.push
+              type: 'danger',
+              msg: data.error || 'Unknown error'
           .finally ->
             $scope.isSaving = false
 

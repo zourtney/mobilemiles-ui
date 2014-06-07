@@ -15,23 +15,28 @@
     </h3>
   </div>
 
-  <span class="text-muted" ng-hide="isNew">Filled up at {{fillup.completed_at | date : 'MM-dd-yyyy hh:mma'}}</span>
-  <button class="btn btn-link" ng-click="changeTime()">change</button>
+  <span class="text-muted" ng-hide="!fillup.completed_at">
+    Filled up on {{fillup.completed_at | date : 'MM-dd-yyyy'}} at {{fillup.completed_at | date : 'hh:mma'}}
+    <button class="btn btn-link" ng-click="changeTime()">change</button>
+  </span>
+  <span class="text-muted" ng-show="!fillup.completed_at">
+    Filling up now
+    <button class="btn btn-link" ng-click="changeTime()">set time</button>
+  </span>
 
   <hr />
 
   <form role="form">
-    <div class="row center-block" ng-hide="!errorMessage">
-      <div class="alert alert-danger col-md-6 col-md-offset-3 alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <strong>Error updating fill-up.</strong> {{errorMessage}}
-      </div>
+    <div class="row center-block">
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" class="col-md-6 col-md-offset-3">
+        {{alert.msg}}
+      </alert>
     </div>
 
     <div class="row">
       <div class="form-group col-md-3">
         <label for="vehicleSelect">Vehicle</label>
-        <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name for v in vehicles" ng-value="" ng-disabled="isBusy()">
+        <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name for v in vehicles" ng-disabled="isBusy()">
           <option value="" disabled="disabled">Select vehicle</option>
         </select>
       </div>
