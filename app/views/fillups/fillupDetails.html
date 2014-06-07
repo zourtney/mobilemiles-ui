@@ -36,7 +36,7 @@
     <div class="row">
       <div class="form-group col-md-3">
         <label for="vehicleSelect">Vehicle</label>
-        <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name for v in vehicles" ng-disabled="isBusy()">
+        <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name || 'Unnamed' for v in vehicles" ng-disabled="isBusy()">
           <option value="" disabled="disabled">Select vehicle</option>
         </select>
       </div>
