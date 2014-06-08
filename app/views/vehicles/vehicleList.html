@@ -1,12 +1,25 @@
 <div class="resource-header">
   <h1>Vehicles</h1>
+
   <a class="btn btn-default resource-add pull-right" ng-href="#/vehicles/new">
     <i class="fa fa-plus-circle"></i> Create new
   </a>
+
+  <div class="resource-sort">
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'name'">name</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'created'">created</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'year'">year</label>
+    </div>
+
+    <label>
+      <input type="checkbox" ng-model="sortReverse" /> reverse
+    </label>
+  </div>
 </div>
 
 <ul class="resource-list vehicle-list list-unstyled">
-  <li class="resource" ng-repeat="vehicle in vehicles">
+  <li class="resource" ng-repeat="vehicle in vehicles | orderBy:sortProperty:sortReverse">
     <a ng-href="#/vehicles/{{vehicle.id}}">
       <div class="body">
         <h3 ng-show="!vehicle.name">Unnamed</h3>

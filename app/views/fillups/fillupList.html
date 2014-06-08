@@ -1,12 +1,25 @@
 <div class="resource-header">
   <h1>Fill-ups</h1>
+
   <a class="btn btn-default resource-add pull-right" ng-href="#/fillups/new">
     <i class="fa fa-plus-circle"></i> Create new
   </a>
+
+  <div class="resource-sort">
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'completed_at'">created</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'price'">price</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'vehicle.name'">vehicle</label>
+    </div>
+
+    <label>
+      <input type="checkbox" ng-model="sortReverse" /> reverse
+    </label>
+  </div>
 </div>
 
 <ul class="resource-list fillup-list list-unstyled">
-  <li class="resource" ng-repeat="fillup in fillups">
+  <li class="resource" ng-repeat="fillup in fillups | orderBy:sortProperty:sortReverse">
     <a ng-href="#/fillups/{{fillup.id}}">
       <div class="body">
         <h3 ng-show="!fillup.name">${{fillup.price}}</h3>

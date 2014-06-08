@@ -2,6 +2,9 @@ fillups = angular.module 'mobilemiles.fillups'
 
 fillups.controller 'FillupListCtrl', ['$scope', 'Vehicle', 'Fillup', ($scope, Vehicle, Fillup) ->
 
+  # Default order criteria
+  $scope.sortProperty = 'completed_at'
+
   # Put the full `vehicle` instance on each fillup.
   resolveVehicles = ->
     if $scope.fillups and $scope.vehicles
