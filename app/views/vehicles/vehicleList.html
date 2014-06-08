@@ -29,6 +29,13 @@
         <h4 ng-show="!vehicle.year && !vehicle.make && !vehicle.model">Unknown vehicle type</h4>
         <h4 ng-hide="!vehicle.year && !vehicle.make && !vehicle.model">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
       </div>
+      <div class="extra single-line badge"
+           ng-pluralize count="vehicle.fillups.length"
+           when="{'0': 'No records',
+                  'one': '1 record',
+                  'other': '{{vehicle.fillups.length}} records'
+                 }">
+      </div>
       <div class="clearfix"></div>
     </a>
   </li>

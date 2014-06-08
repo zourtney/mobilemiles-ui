@@ -3,7 +3,8 @@ module = angular.module 'mobilemiles.vehicles', [
   'ngResource'
   'ui.bootstrap'
   'angularMoment'
-  'mobilemiles.common'
+  'mobilemiles.common',
+  'mobilemiles.fillups'
 ]
 
 # Define routes
