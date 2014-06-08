@@ -8,6 +8,12 @@
 // 'test/spec/**/*.js'
 
 
+
+// Bower problems on Heroku:
+//   https://github.com/bower/bower/issues/933
+
+
+
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
