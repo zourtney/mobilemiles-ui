@@ -24,6 +24,11 @@ label {
 select.inline {
   display: inline-block;
   width: auto;
+  margin-right: 4px;
+}
+
+.time-colon {
+  margin-right: 4px;
 }
 
 
@@ -103,5 +108,8 @@ select.inline {
 .resource-sort {
   label {
     margin-left: 15px;
+  }
+  input[type="checkbox"] {
+    margin-right: 6px;
   }
 }
