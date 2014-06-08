@@ -62,10 +62,10 @@ select.inline {
       display: block;
       padding: 15px 10px;
       text-decoration: none;
+      color: $text-color;
 
       h3 {
         margin-top: 0;
-        color: $text-color;
       }
 
       &:hover {
@@ -73,6 +73,20 @@ select.inline {
         h3 {
           color: $brand-primary;
         }
+      }
+    }
+
+    .body {
+      @extend .pull-left;
+    }
+
+    .extra {
+      @extend .pull-right;
+
+      &.single-line {
+        overflow: hidden;
+        margin-top: 24px;
+        white-space: nowrap;
       }
     }
   }

@@ -2,6 +2,7 @@ module = angular.module 'mobilemiles.vehicles', [
   'ngRoute'
   'ngResource'
   'ui.bootstrap'
+  'angularMoment'
   'mobilemiles.common'
 ]
 
