@@ -8,8 +8,9 @@
   <div class="resource-sort">
     <div class="btn-group">
       <label class="btn btn-default" ng-model="sortProperty" btn-radio="'name'">name</label>
-      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'created'">created</label>
       <label class="btn btn-default" ng-model="sortProperty" btn-radio="'year'">year</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'make'">make</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'model'">model</label>
     </div>
 
     <label>
@@ -28,7 +29,6 @@
         <h4 ng-show="!vehicle.year && !vehicle.make && !vehicle.model">Unknown vehicle type</h4>
         <h4 ng-hide="!vehicle.year && !vehicle.make && !vehicle.model">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</h4>
       </div>
-      <div class="extra single-line">Created {{vehicle.created_at | amCalendar }}</div>
       <div class="clearfix"></div>
     </a>
   </li>
