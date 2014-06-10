@@ -16,7 +16,6 @@ app.config ($routeProvider) ->
     .otherwise
       redirectTo: '/fillups'
 
-
 # High-level application controller. Use this to do define app-wide functions
 # and scope variables. (Use as minimally as possible)
 app.controller 'AppCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
