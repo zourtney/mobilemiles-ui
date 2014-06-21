@@ -1,6 +1,6 @@
 module = angular.module 'mobilemiles.fillups'
 
-module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Grade, Vehicle, Fillup,  fillupId) ->
+module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geolocation', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Geolocation, Grade, Vehicle, Fillup,  fillupId) ->
 
   $scope.isSettingTime = false
   $scope.vehicles = Vehicle.query()
@@ -116,5 +116,28 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Grade'
               msg: data.error || 'Unknown error'
           .finally ->
             $scope.isSaving = false
+
+
+  # Query google for nearby gas stations
+  $scope.map = {
+    center: {
+        latitude: 45,
+        longitude: -73
+    },
+    zoom: 8
+  }
+
+  $scope.$watch 'geoCoords', ->
+    $scope.map.center = $scope.geoCoords;
+
+  $scope.getStations = ->
+    Geolocation.get()
+      .then (location) ->
+        console.log(location)
+        $scope.geoCoords = _.pick(location.coords, 'latitude', 'longitude')
+      .catch (error) ->
+        $scope.alerts.push
+          type: 'warning',
+          msg: error.message
 
 ]

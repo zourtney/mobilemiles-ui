@@ -15,6 +15,13 @@
     </h3>
   </div>
 
+  DEBUG: <button ng-click="getStations()">See nearby stations</button>
+  <div>How about: {{nearbyStations}}</div>
+
+  <hr />
+
+  <google-map class="fillup-location-map" center="map.center" zoom="map.zoom" draggable="true"></google-map>
+
   <span class="text-muted" ng-hide="!fillup.completed_at">
     Filled up on {{fillup.completed_at | date : 'MM-dd-yyyy'}} at {{fillup.completed_at | date : 'hh:mma'}}
     <button class="btn btn-link" ng-click="changeTime()">change</button>

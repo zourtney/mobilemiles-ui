@@ -63,6 +63,8 @@
     </script>
     -->
 
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
@@ -93,7 +95,9 @@
     <script src="bower_components/momentjs/moment.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <!-- endbower -->
+    <script src="bower_components/angularjs-google-places/dist/angularjs-google-places.min.js"></script>
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -114,6 +118,9 @@
         <script src="scripts/vehicles/vehicleDetailsCtrl.js"></script>
         <script src="scripts/vehicles/vehicleListCtrl.js"></script>
         <script src="scripts/vehicles/vehicleService.js"></script>
+
+        <script src="scripts/location/locationModule.js"></script>
+        <script src="scripts/location/geolocation.js"></script>
 
         <script src="scripts/fillups/module.js"></script>
         <script src="scripts/fillups/fillupChangeTimeCtrl.js"></script>
