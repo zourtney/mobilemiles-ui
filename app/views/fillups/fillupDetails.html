@@ -15,103 +15,122 @@
     </h3>
   </div>
 
-  DEBUG: <button ng-click="getStations()">See nearby stations</button>
-  <div>How about: {{nearbyStations}}</div>
-
   <hr />
 
-  <google-map class="fillup-location-map" center="map.center" zoom="map.zoom" draggable="true"></google-map>
-
-  <span class="text-muted" ng-hide="!fillup.completed_at">
-    Filled up on {{fillup.completed_at | date : 'MM-dd-yyyy'}} at {{fillup.completed_at | date : 'hh:mma'}}
-    <button class="btn btn-link" ng-click="changeTime()">change</button>
-  </span>
-  <span class="text-muted" ng-show="!fillup.completed_at">
-    Filling up now
-    <button class="btn btn-link" ng-click="changeTime()">set time</button>
-  </span>
-
-  <hr />
-
-  <form role="form">
-    <div class="row center-block">
-      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" class="col-md-6 col-md-offset-3">
-        {{alert.msg}}
-      </alert>
-    </div>
-
-    <div class="row">
-      <div class="form-group col-md-3">
-        <label for="vehicleSelect">Vehicle</label>
-        <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name || 'Unnamed' for v in vehicles" ng-disabled="isBusy()">
-          <option value="" disabled="disabled">Select vehicle</option>
-        </select>
+  <div class="row">
+    <form role="form" class="col-sm-6">
+      <div class="row center-block">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" class="col-md-6 col-md-offset-3">
+          {{alert.msg}}
+        </alert>
       </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-2">
-        <label for="mileageInput">Mileage</label>
-        <input type="number" id="mileageInput" class="form-control" ng-model="fillup.mileage" ng-disabled="isBusy()" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-2">
-        <label for="gallonsInput">Gallons</label>
-        <input type="number" id="gallonsInput" class="form-control" ng-model="fillup.gallons" ng-change="updatePrice()" ng-disabled="isBusy()" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-2">
-        <label for="ppgInput">Price per gallon</label>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <input type="number" id="ppgInput" class="form-control" ng-model="fillup.price_per_gallon" ng-change="updatePrice()" ng-disabled="isBusy()" />
+
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>When and Where</label>
+          <div>
+            <p ng-hide="!fillup.completed_at">
+              {{fillup.completed_at | date : 'MM-dd-yyyy'}} at {{fillup.completed_at | date : 'hh:mma'}}
+              <button class="btn btn-link" ng-click="changeTime()">change</button>
+            </p>
+            <p ng-show="!fillup.completed_at">
+              now
+              <button class="btn btn-link" ng-click="changeTime()">set time</button>
+            </p>
+
+            <p class="fillup-address">
+              <span class="fillup-address-name">{{nearestStation.name}}</span>
+              <span class="fillup-address-street-container">
+                <span class="fillup-address-street">{{nearestStation.vicinity}}</span>
+                <a class="btn btn-link fillup-change-address">change</a>
+              </span>
+            </p>
+          </div>
         </div>
       </div>
-      <div class="form-group col-md-2">
-        <label for="gradeSelect">Grade</label>
-        <select id="gradeSelect" class="form-control" ng-model="fillup.grade" ng-options="g.val as g.name for g in grades" ng-disabled="isBusy()" placeholder="Grade">
-          <option value="">Unspecified grade</option>
-        </select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-2">
-        <label for="priceInput">Total cost</label>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <input type="number" id="priceInput" class="form-control" ng-model="fillup.price" ng-disabled="isBusy() || autoCalcPrice" />
+
+      <div class="row">
+        <div class="form-group col-md-8">
+          <label for="vehicleSelect">Vehicle</label>
+          <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name || 'Unnamed' for v in vehicles" ng-disabled="isBusy()">
+            <option value="" disabled="disabled">Select vehicle</option>
+          </select>
         </div>
       </div>
-      <div class="checkbox with-label col-sm-3">
-        <label>
-          <input type="checkbox" ng-model="autoCalcPrice" ng-change="updatePrice()" />
-          Auto-calculate
-        </label>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="mileageInput">Mileage</label>
+          <input type="number" id="mileageInput" class="form-control" ng-model="fillup.mileage" ng-disabled="isBusy()" />
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-8">
-        <label for="commentInput">Comment <span class="text-muted">(optional)</span></label>
-        <textarea class="form-control" id="commentInput" ng-model="fillup.comment" rows="3"></textarea>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="gallonsInput">Gallons</label>
+          <input type="number" id="gallonsInput" class="form-control" ng-model="fillup.gallons" ng-change="updatePrice()" ng-disabled="isBusy()" />
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-md-3">
-        <button class="btn btn-primary" ng-click="save()" ng-disabled="isBusy()">
-          <span ng-show="isSaving">Saving...</span>
-          <span ng-hide="isSaving">
-            <span ng-show="isNew">Create</span>
-            <span ng-hide="isNew">Save changes</span>
-          </span>
-        </button>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="ppgInput">Price per gallon</label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" id="ppgInput" class="form-control" ng-model="fillup.price_per_gallon" ng-change="updatePrice()" ng-disabled="isBusy()" />
+          </div>
+        </div>
+        <div class="form-group col-md-8">
+          <label for="gradeSelect">Grade</label>
+          <select id="gradeSelect" class="form-control" ng-model="fillup.grade" ng-options="g.val as g.name for g in grades" ng-disabled="isBusy()" placeholder="Grade">
+            <option value="">Unspecified grade</option>
+          </select>
+        </div>
       </div>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="priceInput">Total cost</label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" id="priceInput" class="form-control" ng-model="fillup.price" ng-disabled="isBusy() || autoCalcPrice" />
+          </div>
+        </div>
+        <div class="checkbox with-label col-sm-3">
+          <label>
+            <input type="checkbox" ng-model="autoCalcPrice" ng-change="updatePrice()" />
+            Auto-calculate
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label for="commentInput">Comment <span class="text-muted">(optional)</span></label>
+          <textarea class="form-control" id="commentInput" ng-model="fillup.comment" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-3">
+          <button class="btn btn-primary" ng-click="save()" ng-disabled="isBusy()">
+            <span ng-show="isSaving">Saving...</span>
+            <span ng-hide="isSaving">
+              <span ng-show="isNew">Create</span>
+              <span ng-hide="isNew">Save changes</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="col-sm-6">
+      <google-map class="fillup-location-map"
+              center="map.center"
+              zoom="map.zoom"
+              control="map.control"
+              draggable="true">
+      </google-map>
     </div>
-  </form>
+  </div>
 
   <hr />
 
-  <div ng-hide="isNew">
+  <div class="col-sm-12" ng-hide="isNew">
     <p class="text-center">Done with this fill-up entry? You can delete it.</p>
     <button class="btn btn-danger center-block" ng-click="delete()" ng-disabled="isBusy()">
       <span ng-show="isDeleting">Deleting...</span>

@@ -1,6 +1,6 @@
 module = angular.module 'mobilemiles.fillups'
 
-module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geolocation', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Geolocation, Grade, Vehicle, Fillup,  fillupId) ->
+module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geolocation', 'GasStation', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Geolocation, GasStation, Grade, Vehicle, Fillup,  fillupId) ->
 
   $scope.isSettingTime = false
   $scope.vehicles = Vehicle.query()
@@ -120,24 +120,32 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
 
   # Query google for nearby gas stations
   $scope.map = {
+    control: {},
     center: {
-        latitude: 45,
-        longitude: -73
+      latitude: 35.5348213,
+      longitude: -83.587697
     },
     zoom: 8
   }
 
   $scope.$watch 'geoCoords', ->
-    $scope.map.center = $scope.geoCoords;
+    $scope.map.center.latitude = $scope.geoCoords.latitude
+    $scope.map.center.longitude = $scope.geoCoords.longitude
 
-  $scope.getStations = ->
-    Geolocation.get()
-      .then (location) ->
-        console.log(location)
-        $scope.geoCoords = _.pick(location.coords, 'latitude', 'longitude')
-      .catch (error) ->
-        $scope.alerts.push
-          type: 'warning',
-          msg: error.message
+  Geolocation.get()
+    .then (location) ->
+      $scope.geoCoords = _.pick(location.coords, 'latitude', 'longitude')
+
+      GasStation.nearby($scope.map.control.getGMap(), $scope.geoCoords)
+        .then (results) ->
+          $scope.nearestStation = results[0] or {}
+        .catch (error) ->
+          $scope.alerts.push
+            type: 'warning'
+            msg: error
+    .catch (error) ->
+      $scope.alerts.push
+        type: 'warning',
+        msg: error.message
 
 ]
