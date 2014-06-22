@@ -18,8 +18,7 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
     $scope.isNew = true
     $scope.fillup = new Fillup()
     $scope.autoCalcPrice = true
-    #$scope.fillup.googlePlace = 'CnRlAAAAp-AzKw0fEbkxvdtBo9FwyqVo-KwOIj0CHVWotAeirfFnaY_sVFDlbR534RLpQo8kkzu8IQexu0XGGe1dyEcjSo0zXbMlLc1_TbQHejaRwWcQZ0vOMtG-NJQ0hWOaTmtfCCV6wMojH_R5i0ZvM_W-KxIQuUFeBtGSTAaaudtkBT0UEBoU4F9TXBmCy_3S__pT_oxSfJSGYCU'
-    
+
     Geolocation.get()
       .then (location) ->
         $scope.fillup.latitude = location.coords.latitude
@@ -68,6 +67,7 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
     else
       $scope.isSaving = true
       $scope.fillup.vehicle_id = $scope.vehicle.id
+      $scope.fillup.google_id = if $scope.selectedStation then $scope.selectedStation.reference else null
       method = if $scope.isNew then '$save' else '$update'
 
       $scope.fillup[method]()
@@ -146,33 +146,34 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
       $scope.map.center.longitude = $scope.fillup.longitude
 
       # Here we get a list of all nearby stations. The this fillup doesn't have
-      # an associated station ('googlePlace'), the set it as the closest.
+      # an associated station ('google_place'), the set it as the closest.
       GasStation.nearby($scope.map.control.getGMap(), $scope.fillup.latitude, $scope.fillup.longitude)
         .then (results) ->
           $scope.stations = results
-          if ! $scope.fillup.googlePlace and results.length
-            $scope.fillup.googlePlace = results[0].reference
+          if $scope.isNew and results.length
+            $scope.fillup.google_place = results[0].reference
             $scope.selectedStation = results[0]
         .catch (error) ->
           $scope.alerts.push
             type: 'warning'
             msg: error
 
-  $scope.$watch('fillup.longitude', resolveNearbyStations)
+  # $scope.$watch('fillup.longitude', resolveNearbyStations)
   $scope.$watch('fillup.latitude', resolveNearbyStations)
 
   $scope.setSelectedStation = (station) ->
-    $scope.fillup.googlePlace = station.reference
+    $scope.fillup.google_place = station.reference
 
-  $scope.$watch 'fillup.googlePlace', ->
-    # Google documentation recommends keeping stored place reference IDs up to
-    # date, despite the fact that they're guaranteed to be a one-to-one map to
-    # to a place. Here we're doing the lookup with the possibly-stale ID, the
-    # updating it.
-    if $scope.fillup.googlePlace
-      GasStation.getDetails($scope.map.control.getGMap(), $scope.fillup.googlePlace)
+  $scope.$watch 'fillup.google_place', ->
+    # Get additional information about this place. We could use this to display
+    # fancy stuff, but its main purpose is to get an updated version of the
+    # 'reference' ID. The `save()` function sets updated value on the model
+    # before posting to the server. This satisfies Google's recommendentation
+    # periodically update these references. See:
+    # https://developers.google.com/maps/documentation/javascript/places#place_details_responses
+    if $scope.fillup.google_place
+      GasStation.getDetails($scope.map.control.getGMap(), $scope.fillup.google_place)
         .then (data) ->
-          $scope.fillup.reference = data.reference
           $scope.selectedStation = data
         .catch (error) ->
           $scope.alerts.push
