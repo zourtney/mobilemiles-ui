@@ -13,12 +13,22 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
     $scope.alerts.splice(index, 1)
   
 
-  # Fetch the existing fillup, or make a new empty one
   if fillupId == 'new'
+    # Create a new fillup object, initialized with current position.
     $scope.isNew = true
     $scope.fillup = new Fillup()
     $scope.autoCalcPrice = true
+    
+    Geolocation.get()
+      .then (location) ->
+        $scope.fillup.latitude = location.coords.latitude
+        $scope.fillup.longitude = location.coords.longitude
+      .catch (error) ->
+        $scope.alerts.push
+          type: 'warning',
+          msg: error.message
   else
+    # Fetch the existing fillup.
     Fillup.get({ id: fillupId }).$promise
       .then (data) ->
         $scope.fillup = data
@@ -122,30 +132,46 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
   $scope.map = {
     control: {},
     center: {
-      latitude: 35.5348213,
+      latitude: 35.5348213,   # somewhere cool
       longitude: -83.587697
     },
     zoom: 8
   }
 
-  $scope.$watch 'geoCoords', ->
-    $scope.map.center.latitude = $scope.geoCoords.latitude
-    $scope.map.center.longitude = $scope.geoCoords.longitude
+  resolveNearbyStations = ->
+    if $scope.fillup and $scope.fillup.longitude and $scope.fillup.latitude
+      # Center the map
+      $scope.map.center.latitude = $scope.fillup.latitude
+      $scope.map.center.longitude = $scope.fillup.longitude
 
-  Geolocation.get()
-    .then (location) ->
-      $scope.geoCoords = _.pick(location.coords, 'latitude', 'longitude')
+      # Google documentation recommends keeping stored place reference IDs up
+      # to date, despite the fact that they're guaranteed to be a one-to-one
+      # map to a place. Here we're doing the lookup with the possibly-stale ID,
+      # then updating it.
+      if $scope.fillup.googlePlace
+        GasStation.getDetails($scope.map.control.getGMap(), $scope.fillup.googlePlace)
+          .then (data) ->
+            $scope.fillup.reference = data.reference
+            $scope.selectedStation = data
+          .catch (error) ->
+            $scope.alerts.push
+              type: 'warning'
+              msg: error
 
-      GasStation.nearby($scope.map.control.getGMap(), $scope.geoCoords)
+      # Here we get a list of all nearby stations. The this fillup doesn't have
+      # an associated station ('googlePlace'), the set it as the closest.
+      GasStation.nearby($scope.map.control.getGMap(), $scope.fillup.latitude, $scope.fillup.longitude)
         .then (results) ->
-          $scope.nearestStation = results[0] or {}
+          $scope.stations = results
+          if ! $scope.fillup.googlePlace and results.length
+            $scope.fillup.googlePlace = results[0].reference
+            $scope.selectedStation = results[0]
         .catch (error) ->
           $scope.alerts.push
             type: 'warning'
             msg: error
-    .catch (error) ->
-      $scope.alerts.push
-        type: 'warning',
-        msg: error.message
+
+  $scope.$watch('fillup.longitude', resolveNearbyStations)
+  $scope.$watch('fillup.latitude', resolveNearbyStations)
 
 ]

@@ -34,16 +34,20 @@
               <button class="btn btn-link" ng-click="changeTime()">change</button>
             </p>
             <p ng-show="!fillup.completed_at">
-              now
+              Filling up now
               <button class="btn btn-link" ng-click="changeTime()">set time</button>
             </p>
 
             <p class="fillup-address">
-              <span class="fillup-address-name">{{nearestStation.name}}</span>
+              <span class="fillup-address-name">{{selectedStation.name}}</span>
               <span class="fillup-address-street-container">
-                <span class="fillup-address-street">{{nearestStation.vicinity}}</span>
+                <span class="fillup-address-street">{{selectedStation.vicinity}}</span>
                 <a class="btn btn-link fillup-change-address">change</a>
               </span>
+            </p>
+
+            <p class="text-muted">
+              {{fillup.latitude}}, {{fillup.longitude}}
             </p>
           </div>
         </div>
@@ -125,6 +129,14 @@
               control="map.control"
               draggable="true">
       </google-map>
+
+      <ul>
+        <li ng-repeat="station in stations">
+          {{station.name}}
+          <br />
+          {{station.vicinity}}
+        </li>
+      </ul>
     </div>
   </div>
 
