@@ -130,11 +130,10 @@
               draggable="true">
       </google-map>
 
-      <ul>
-        <li ng-repeat="station in stations">
-          {{station.name}}
-          <br />
-          {{station.vicinity}}
+      <ul class="list-unstyled fillup-station-list">
+        <li ng-repeat="station in stations" ng-click="setSelectedStation(station)" ng-class="{'selected' : station.reference === fillup.googlePlace}" class="fillup-station">
+          <span class="fillup-address-name">{{station.name}}</span>
+          <span class="fillup-address-street">{{station.vicinity}}</span>
         </li>
       </ul>
     </div>

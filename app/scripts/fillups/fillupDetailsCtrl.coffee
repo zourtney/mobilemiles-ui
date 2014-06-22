@@ -18,6 +18,7 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
     $scope.isNew = true
     $scope.fillup = new Fillup()
     $scope.autoCalcPrice = true
+    #$scope.fillup.googlePlace = 'CnRlAAAAp-AzKw0fEbkxvdtBo9FwyqVo-KwOIj0CHVWotAeirfFnaY_sVFDlbR534RLpQo8kkzu8IQexu0XGGe1dyEcjSo0zXbMlLc1_TbQHejaRwWcQZ0vOMtG-NJQ0hWOaTmtfCCV6wMojH_R5i0ZvM_W-KxIQuUFeBtGSTAaaudtkBT0UEBoU4F9TXBmCy_3S__pT_oxSfJSGYCU'
     
     Geolocation.get()
       .then (location) ->
@@ -144,20 +145,6 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
       $scope.map.center.latitude = $scope.fillup.latitude
       $scope.map.center.longitude = $scope.fillup.longitude
 
-      # Google documentation recommends keeping stored place reference IDs up
-      # to date, despite the fact that they're guaranteed to be a one-to-one
-      # map to a place. Here we're doing the lookup with the possibly-stale ID,
-      # then updating it.
-      if $scope.fillup.googlePlace
-        GasStation.getDetails($scope.map.control.getGMap(), $scope.fillup.googlePlace)
-          .then (data) ->
-            $scope.fillup.reference = data.reference
-            $scope.selectedStation = data
-          .catch (error) ->
-            $scope.alerts.push
-              type: 'warning'
-              msg: error
-
       # Here we get a list of all nearby stations. The this fillup doesn't have
       # an associated station ('googlePlace'), the set it as the closest.
       GasStation.nearby($scope.map.control.getGMap(), $scope.fillup.latitude, $scope.fillup.longitude)
@@ -173,5 +160,23 @@ module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geoloc
 
   $scope.$watch('fillup.longitude', resolveNearbyStations)
   $scope.$watch('fillup.latitude', resolveNearbyStations)
+
+  $scope.setSelectedStation = (station) ->
+    $scope.fillup.googlePlace = station.reference
+
+  $scope.$watch 'fillup.googlePlace', ->
+    # Google documentation recommends keeping stored place reference IDs up to
+    # date, despite the fact that they're guaranteed to be a one-to-one map to
+    # to a place. Here we're doing the lookup with the possibly-stale ID, the
+    # updating it.
+    if $scope.fillup.googlePlace
+      GasStation.getDetails($scope.map.control.getGMap(), $scope.fillup.googlePlace)
+        .then (data) ->
+          $scope.fillup.reference = data.reference
+          $scope.selectedStation = data
+        .catch (error) ->
+          $scope.alerts.push
+            type: 'warning'
+            msg: error
 
 ]

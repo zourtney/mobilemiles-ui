@@ -14,3 +14,14 @@
 .fillup-address-street {
   font-style: italic;
 }
+
+.fillup-station-list {
+  .fillup-station {
+    padding: 10px 15px;
+    border-bottom: 1px solid $gray;
+
+    &.selected {
+      background: $gray-lighter;
+    }
+  }
+}
