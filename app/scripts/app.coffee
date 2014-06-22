@@ -7,7 +7,8 @@ app = angular.module 'mobilemiles.app', [
   'mobilemiles.auth',
   'mobilemiles.users',
   'mobilemiles.vehicles',
-  'mobilemiles.fillups'
+  'mobilemiles.fillups',
+  'mobilemiles.location'
 ]
 
 # Set up default route. Actual routes are defined by modules.
