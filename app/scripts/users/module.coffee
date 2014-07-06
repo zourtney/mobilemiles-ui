@@ -1,4 +1,4 @@
-module = angular.module 'mobilemiles.users', [
+angular.module 'mobilemiles.users', [
   'ngRoute'
   'ngResource'
   'mobilemiles.common'

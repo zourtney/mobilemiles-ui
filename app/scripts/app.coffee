@@ -1,4 +1,4 @@
-app = angular.module 'mobilemiles.app', [
+window.mobilemiles = angular.module 'mobilemiles.app', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
@@ -12,13 +12,13 @@ app = angular.module 'mobilemiles.app', [
 ]
 
 # Set up default route. Actual routes are defined by modules.
-app.config ($routeProvider) ->
+.config ($routeProvider) ->
   $routeProvider
     .otherwise
       redirectTo: '/fillups'
 
 # High-level application controller. Use this to do define app-wide functions
 # and scope variables. (Use as minimally as possible)
-app.controller 'AppCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
+.controller 'AppCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
   
 ]

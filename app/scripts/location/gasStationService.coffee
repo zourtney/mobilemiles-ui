@@ -1,6 +1,6 @@
-module = angular.module 'mobilemiles.location'
+angular.module 'mobilemiles.location'
 
-module.factory 'GasStation', ['$q', ($q) -> {
+.factory 'GasStation', ['$q', ($q) -> {
 
   nearby: (map, latitude, longitude) ->
     deferred = $q.defer()

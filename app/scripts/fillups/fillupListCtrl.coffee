@@ -1,6 +1,6 @@
-fillups = angular.module 'mobilemiles.fillups'
+angular.module 'mobilemiles.fillups'
 
-fillups.controller 'FillupListCtrl', ['$scope', 'Vehicle', 'Fillup', ($scope, Vehicle, Fillup) ->
+.controller 'FillupListCtrl', ['$scope', 'Vehicle', 'Fillup', ($scope, Vehicle, Fillup) ->
 
   # Default order criteria
   $scope.sortProperty = 'completed_at'

@@ -1,4 +1,4 @@
-module = angular.module 'mobilemiles.vehicles', [
+angular.module 'mobilemiles.vehicles', [
   'ngRoute'
   'ngResource'
   'ui.bootstrap'
@@ -7,7 +7,7 @@ module = angular.module 'mobilemiles.vehicles', [
 ]
 
 # Define routes
-module.config ($routeProvider) ->
+.config ($routeProvider) ->
   $routeProvider.when '/vehicles',
     templateUrl: 'views/vehicles/vehicleList.html',
     controller: 'VehicleListCtrl'
@@ -19,7 +19,7 @@ module.config ($routeProvider) ->
       vehicleId: ['$route', ($route) -> $route.current.params.id]
 
 # Add route to global nav links
-module.run ($rootScope) ->
+.run ($rootScope) ->
   ($rootScope.navLinks || = []).push
     title: 'Vehicles',
     url: '#vehicles',

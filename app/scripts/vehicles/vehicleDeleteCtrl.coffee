@@ -1,6 +1,6 @@
-module = angular.module 'mobilemiles.vehicles'
+angular.module 'mobilemiles.vehicles'
 
-module.controller 'VehicleDeleteCtrl', ['$scope', '$modalInstance', 'vehicle', ($scope, $modalInstance, vehicle) ->
+.controller 'VehicleDeleteCtrl', ['$scope', '$modalInstance', 'vehicle', ($scope, $modalInstance, vehicle) ->
 
   $scope.vehicle = vehicle
 

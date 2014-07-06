@@ -1,6 +1,6 @@
-module = angular.module 'mobilemiles.location'
+angular.module 'mobilemiles.location'
 
-module.factory 'Geolocation', ['$window', '$q', '$rootScope', ($window, $q, $rootScope) -> {
+.factory 'Geolocation', ['$window', '$q', '$rootScope', ($window, $q, $rootScope) -> {
 
   # http://proccli.com/2013/10/angularjs-geolocation-service
   get: ->

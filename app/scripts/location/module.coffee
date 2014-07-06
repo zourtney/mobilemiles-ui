@@ -1,1 +1,1 @@
-module = angular.module 'mobilemiles.location', []
+angular.module 'mobilemiles.location', []

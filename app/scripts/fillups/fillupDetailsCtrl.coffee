@@ -1,6 +1,6 @@
-module = angular.module 'mobilemiles.fillups'
+angular.module 'mobilemiles.fillups'
 
-module.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geolocation', 'GasStation', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Geolocation, GasStation, Grade, Vehicle, Fillup,  fillupId) ->
+.controller 'FillupDetailsCtrl', ['$scope', '$modal', '$location', 'Geolocation', 'GasStation', 'Grade', 'Vehicle', 'Fillup', 'fillupId', ($scope, $modal, $location, Geolocation, GasStation, Grade, Vehicle, Fillup,  fillupId) ->
 
   $scope.isSettingTime = false
   $scope.vehicles = Vehicle.query()

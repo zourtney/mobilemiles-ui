@@ -1,6 +1,6 @@
-module = angular.module 'mobilemiles.fillups'
+angular.module 'mobilemiles.fillups'
 
-module.controller 'FillupDeleteCtrl', ['$scope', '$modalInstance', 'fillup', ($scope, $modalInstance, fillup) ->
+.controller 'FillupDeleteCtrl', ['$scope', '$modalInstance', 'fillup', ($scope, $modalInstance, fillup) ->
 
   $scope.fillup = fillup
 

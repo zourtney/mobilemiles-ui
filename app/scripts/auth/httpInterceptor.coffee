@@ -1,6 +1,6 @@
-module = angular.module 'mobilemiles.auth'
+angular.module 'mobilemiles.auth'
 
-module.factory 'authInterceptor', ['$q', 'authToken', ($q, authToken) -> {
+.factory 'authInterceptor', ['$q', 'authToken', ($q, authToken) -> {
 
   # Send out auth token in the 'Authorization' header
   request: (config) ->
@@ -27,6 +27,6 @@ module.factory 'authInterceptor', ['$q', 'authToken', ($q, authToken) -> {
 }]
 
 
-module.config ['$httpProvider', ($httpProvider) ->
+.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.interceptors.push('authInterceptor')
 ]

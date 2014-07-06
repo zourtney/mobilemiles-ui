@@ -1,6 +1,6 @@
-module = angular.module 'mobilemiles.auth'
+angular.module 'mobilemiles.auth'
 
-module.controller 'LoginCtrl', ['$scope', '$rootScope', '$location', 'properties', 'User', 'Session', ($scope, $rootScope, $location, properties, User, Session) ->
+.controller 'LoginCtrl', ['$scope', '$rootScope', '$location', 'properties', 'User', 'Session', ($scope, $rootScope, $location, properties, User, Session) ->
 
   $rootScope.isFullscreen = true;
 

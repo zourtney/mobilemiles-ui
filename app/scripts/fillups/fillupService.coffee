@@ -1,13 +1,13 @@
-module = angular.module 'mobilemiles.fillups'
+angular.module 'mobilemiles.fillups'
 
-module.factory 'Fillup', ['$resource', 'properties', ($resource, properties) ->
+.factory 'Fillup', ['$resource', 'properties', ($resource, properties) ->
   return $resource(properties.BASE_URL + '/fillups/:id', 
     { id: '@id' },
     { update: { method : 'PUT' } }
   )
 ]
 
-module.factory 'Grade', ->
+.factory 'Grade', ->
   query = -> [
     { name: 'Regular', val: 'regular' },
     { name: 'Plus', val: 'plus' },

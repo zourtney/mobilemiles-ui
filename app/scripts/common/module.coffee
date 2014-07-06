@@ -1,7 +1,7 @@
 # Constants
-module = angular.module 'mobilemiles.common', []
+angular.module 'mobilemiles.common', []
 
-module.constant 'properties',
+.constant 'properties',
   BASE_URL: '<%= process.env.SERVER_URL %>',   # environment variable set via grunt
   FIRST_PAGE: '/vehicles'
   #TODO: build date/time
