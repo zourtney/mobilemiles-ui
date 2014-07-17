@@ -24,7 +24,7 @@ module.exports = function (grunt) {
 
   // Default deployment server
   var fallbackEnv = {
-    SERVER_URL: 'http://localhost:3000'
+    SERVER_URL: 'http://127.0.0.1:3000'
   }
 
   // Define the configuration for all the tasks
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '127.0.0.1',
         livereload: 35729
       },
       livereload: {
