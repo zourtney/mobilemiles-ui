@@ -29,19 +29,29 @@ angular.module 'mobilemiles.fillups'
       .then (location) ->
         $scope.fillup.latitude = location.coords.latitude
         $scope.fillup.longitude = location.coords.longitude
-        showStations()
+        getNearbyStations()
       .catch (error) ->
         $scope.alerts.push
           type: 'warning',
           msg: error.message
 
-  showStations = () ->
+  getNearbyStations = () ->
     GasStation.nearby($scope.mapMetadata.control.getGMap(), $scope.fillup.latitude, $scope.fillup.longitude)
       .then (results) ->
         $scope.stations = results
         if $scope.isNew and results.length
           $scope.fillup.google_place = results[0].reference
           $scope.selectedStation = results[0]
+      .catch (error) ->
+        $scope.alerts.push
+          type: 'warning'
+          msg: error
+
+  getOneStation = () ->
+    GasStation.getDetails($scope.mapMetadata.control.getGMap(), $scope.fillup.google_place)
+      .then (data) ->
+        $scope.stations = [data]
+        $scope.selectedStation = $scope.stations[0]
       .catch (error) ->
         $scope.alerts.push
           type: 'warning'
@@ -54,7 +64,6 @@ angular.module 'mobilemiles.fillups'
     $scope.isNew = true
     $scope.fillup = new Fillup()
     $scope.autoCalcPrice = true 
-
     setLocation()
   else
     # Fetch the existing fillup.
@@ -62,6 +71,7 @@ angular.module 'mobilemiles.fillups'
       .then (data) ->
         $scope.fillup = data
         $scope.autoCalcPrice = $scope.fillup.price == getAutoCalcPrice()
+        getOneStation()
       .catch (data) ->
         $scope.fillup = null
 
@@ -95,8 +105,8 @@ angular.module 'mobilemiles.fillups'
         msg: 'You must select a vehicle.'
     else
       $scope.isSaving = true
-      $scope.fillup.vehicle_id = $scope.vehicle.id
-      $scope.fillup.google_id = if $scope.selectedStation then $scope.selectedStation.reference else null
+      # $scope.fillup.vehicle_id = $scope.vehicle.id
+      # $scope.fillup.google_place = if $scope.selectedStation then $scope.selectedStation.reference else null
       method = if $scope.isNew then '$save' else '$update'
 
       $scope.fillup[method]()
@@ -157,24 +167,30 @@ angular.module 'mobilemiles.fillups'
           .finally ->
             $scope.isSaving = false
 
+  # Keep `fillup.vehicle_id` in sync with the currently selected one from the
+  # dropdown.
+  $scope.$watch 'vehicle', () ->
+    if $scope.vehicle
+      $scope.fillup.vehicle_id = $scope.vehicle.id
+
+  # Keep `fillup.google_place` in sync with the currently selected one from the
+  # map / station selection UIs.
   $scope.$watch 'selectedStation', () ->
     if $scope.selectedStation
-      $scope.fillup.google_place = $scope.selectedStation.reference
-
-  # $scope.$watch 'fillup.google_place', ->
-  #   # Get additional information about this place. We could use this to display
-  #   # fancy stuff, but its main purpose is to get an updated version of the
-  #   # 'reference' ID. The `save()` function sets updated value on the model
-  #   # before posting to the server. This satisfies Google's recommendentation
-  #   # periodically update these references. See:
-  #   # https://developers.google.com/maps/documentation/javascript/places#place_details_responses
-  #   if $scope.fillup.google_place
-  #     GasStation.getDetails($scope.mapMetadata.control.getGMap(), $scope.fillup.google_place)
-  #       .then (data) ->
-  #         $scope.selectedStation = data
-  #       .catch (error) ->
-  #         $scope.alerts.push
-  #           type: 'warning'
-  #           msg: error
+      # Get additional information about this place. We could use this to 
+      # display fancy stuff, but its main purpose is to get an updated version
+      # of the 'reference' ID. This satisfies Google's recommendentation 
+      # periodically update these references. See:
+      # https://developers.google.com/maps/documentation/javascript/places#place_details_responses
+      GasStation.getDetails($scope.mapMetadata.control.getGMap(), $scope.selectedStation.reference)
+        .then (data) ->
+          debugger
+          $scope.fillup.google_place = data.reference
+        .catch (error) ->
+          debugger
+          $scope.fillup.google_place = $scope.selectedStation.reference
+          $scope.alerts.push
+            type: 'warning'
+            msg: error
 
 ]
