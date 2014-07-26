@@ -3,25 +3,3 @@
     height: 400px;
   }
 }
-
-.fillup-address-name {
-  display: block;
-}
-.fillup-address-street-container {
-  margin-top: -5px;
-  display: block;
-}
-.fillup-address-street {
-  font-style: italic;
-}
-
-.fillup-station-list {
-  .fillup-station {
-    padding: 10px 15px;
-    border-bottom: 1px solid $gray;
-
-    &.selected {
-      background: $gray-lighter;
-    }
-  }
-}

@@ -1,0 +1,21 @@
+.location-address-name {
+  display: block;
+}
+.location-address-street {
+  font-style: italic;
+}
+.location-open-now {
+  font-weight: bold;
+  color: $brand-success;
+}
+
+.station-list {
+  .station {
+    padding: 10px 15px;
+    border-bottom: 1px solid $gray;
+
+    &.selected {
+      background: $gray-lighter;
+    }
+  }
+}
