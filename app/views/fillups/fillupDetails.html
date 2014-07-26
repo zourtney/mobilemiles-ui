@@ -128,12 +128,10 @@
                           ng-model="selectedStation">
       </mm-gas-station-map>
 
-      <ul class="list-unstyled fillup-station-list">
-        <li ng-repeat="station in stations" ng-click="setSelectedStation(station)" ng-class="{'selected' : station.id === selectedStation.id}" class="fillup-station">
-          <span class="fillup-address-name">{{station.name}}</span>
-          <span class="fillup-address-street">{{station.vicinity}}</span>
-        </li>
-      </ul>
+      <mm-gas-station-list map-metadata="mapMetadata"
+                           stations="stations"
+                           ng-model="selectedStation">
+      </mm-gas-station-list>
     </div>
   </div>
 

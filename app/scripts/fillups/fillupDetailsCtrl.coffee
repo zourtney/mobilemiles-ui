@@ -157,28 +157,24 @@ angular.module 'mobilemiles.fillups'
           .finally ->
             $scope.isSaving = false
 
-
-
-  $scope.setSelectedStation = (station) ->
-    $scope.selectedStation = station
-
   $scope.$watch 'selectedStation', () ->
-    $scope.fillup.google_place = $scope.selectedStation.reference
+    if $scope.selectedStation
+      $scope.fillup.google_place = $scope.selectedStation.reference
 
-  $scope.$watch 'fillup.google_place', ->
-    # Get additional information about this place. We could use this to display
-    # fancy stuff, but its main purpose is to get an updated version of the
-    # 'reference' ID. The `save()` function sets updated value on the model
-    # before posting to the server. This satisfies Google's recommendentation
-    # periodically update these references. See:
-    # https://developers.google.com/maps/documentation/javascript/places#place_details_responses
-    if $scope.fillup.google_place
-      GasStation.getDetails($scope.map.control.getGMap(), $scope.fillup.google_place)
-        .then (data) ->
-          $scope.selectedStation = data
-        .catch (error) ->
-          $scope.alerts.push
-            type: 'warning'
-            msg: error
+  # $scope.$watch 'fillup.google_place', ->
+  #   # Get additional information about this place. We could use this to display
+  #   # fancy stuff, but its main purpose is to get an updated version of the
+  #   # 'reference' ID. The `save()` function sets updated value on the model
+  #   # before posting to the server. This satisfies Google's recommendentation
+  #   # periodically update these references. See:
+  #   # https://developers.google.com/maps/documentation/javascript/places#place_details_responses
+  #   if $scope.fillup.google_place
+  #     GasStation.getDetails($scope.mapMetadata.control.getGMap(), $scope.fillup.google_place)
+  #       .then (data) ->
+  #         $scope.selectedStation = data
+  #       .catch (error) ->
+  #         $scope.alerts.push
+  #           type: 'warning'
+  #           msg: error
 
 ]

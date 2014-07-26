@@ -1,0 +1,7 @@
+{{ngModel}}
+<ul class="list-unstyled fillup-station-list">
+  <li ng-repeat="station in stations" ng-click="$parent.ngModel = station" ng-class="{'selected' : station.id === ngModel.id}" class="fillup-station">
+    <span class="fillup-address-name">{{station.name}}</span>
+    <span class="fillup-address-street">{{station.vicinity}}</span>
+  </li>
+</ul>
