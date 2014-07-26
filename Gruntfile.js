@@ -37,11 +37,6 @@ module.exports = function (grunt) {
       dist: 'dist'
     },
 
-    bower: {
-      install: {
-      }
-    },
-
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -489,7 +484,6 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'bower:install',
       'bowerInstall',
       'concurrent:server',
       'replace',
@@ -506,7 +500,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'bower:install',
     'concurrent:test',
     'replace',
     'autoprefixer',
@@ -516,7 +509,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'bower:install',
     'bowerInstall',
     'coffee',
     'useminPrepare',
