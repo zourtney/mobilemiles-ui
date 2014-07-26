@@ -10,23 +10,14 @@ angular.module 'mobilemiles.location'
     mapMetadata: '='
     stations: '='
     ngModel: '='
-    latitude: '='
-    longitude: '='
 
   link: (scope, element, attrs) ->
 
-    centerMap = (latLng) ->
+    scope.$watch 'ngModel', () ->
+      if scope.ngModel
+        latLng = scope.ngModel.geometry.location
         scope.mapMetadata.center.latitude = latLng.lat()
         scope.mapMetadata.center.longitude = latLng.lng()
         scope.mapMetadata.zoom = 16
-
-    #TOOD: fix issue where the function is getting called twice.
-    # scope.$watch 'longitude', centerMap
-    # scope.$watch 'latitude', centerMap
-
-    scope.$watch 'ngModel', () ->
-      if scope.ngModel
-        console.log('centering on ', scope.ngModel)
-        centerMap(scope.ngModel.geometry.location)
 
 }]
