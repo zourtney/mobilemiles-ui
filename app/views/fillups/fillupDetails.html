@@ -123,12 +123,10 @@
     </form>
 
     <div class="col-sm-6">
-      <google-map class="fillup-location-map"
-              center="map.center"
-              zoom="map.zoom"
-              control="map.control"
-              draggable="true">
-      </google-map>
+      <mm-gas-station-map map-metadata="mapMetadata"
+                          stations="stations"
+                          ng-model="selectedStation">
+      </mm-gas-station-map>
 
       <ul class="list-unstyled fillup-station-list">
         <li ng-repeat="station in stations" ng-click="setSelectedStation(station)" ng-class="{'selected' : station.id === selectedStation.id}" class="fillup-station">

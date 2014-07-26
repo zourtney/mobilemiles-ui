@@ -11,22 +11,51 @@ angular.module 'mobilemiles.fillups'
   $scope.alerts = []
   $scope.closeAlert = (index) ->
     $scope.alerts.splice(index, 1)
+
+
+
+  $scope.mapMetadata =
+    control: {}
+    zoom: 8
+    center:
+      latitude: 35.5348213   # somewhere cool looking
+      longitude: -83.587697
+
+
+
+  # Fetch geolocation
+  setLocation = () ->
+    Geolocation.get()
+      .then (location) ->
+        $scope.fillup.latitude = location.coords.latitude
+        $scope.fillup.longitude = location.coords.longitude
+        showStations()
+      .catch (error) ->
+        $scope.alerts.push
+          type: 'warning',
+          msg: error.message
+
+  showStations = () ->
+    GasStation.nearby($scope.mapMetadata.control.getGMap(), $scope.fillup.latitude, $scope.fillup.longitude)
+      .then (results) ->
+        $scope.stations = results
+        if $scope.isNew and results.length
+          $scope.fillup.google_place = results[0].reference
+          $scope.selectedStation = results[0]
+      .catch (error) ->
+        $scope.alerts.push
+          type: 'warning'
+          msg: error
+
   
 
   if fillupId == 'new'
     # Create a new fillup object, initialized with current position.
     $scope.isNew = true
     $scope.fillup = new Fillup()
-    $scope.autoCalcPrice = true
+    $scope.autoCalcPrice = true 
 
-    Geolocation.get()
-      .then (location) ->
-        $scope.fillup.latitude = location.coords.latitude
-        $scope.fillup.longitude = location.coords.longitude
-      .catch (error) ->
-        $scope.alerts.push
-          type: 'warning',
-          msg: error.message
+    setLocation()
   else
     # Fetch the existing fillup.
     Fillup.get({ id: fillupId }).$promise
@@ -129,40 +158,12 @@ angular.module 'mobilemiles.fillups'
             $scope.isSaving = false
 
 
-  # Query google for nearby gas stations
-  $scope.map = {
-    control: {},
-    center: {
-      latitude: 35.5348213,   # somewhere cool
-      longitude: -83.587697
-    },
-    zoom: 8
-  }
-
-  resolveNearbyStations = ->
-    if $scope.fillup and $scope.fillup.longitude and $scope.fillup.latitude
-      # Center the map
-      $scope.map.center.latitude = $scope.fillup.latitude
-      $scope.map.center.longitude = $scope.fillup.longitude
-
-      # Here we get a list of all nearby stations. The this fillup doesn't have
-      # an associated station ('google_place'), the set it as the closest.
-      GasStation.nearby($scope.map.control.getGMap(), $scope.fillup.latitude, $scope.fillup.longitude)
-        .then (results) ->
-          $scope.stations = results
-          if $scope.isNew and results.length
-            $scope.fillup.google_place = results[0].reference
-            $scope.selectedStation = results[0]
-        .catch (error) ->
-          $scope.alerts.push
-            type: 'warning'
-            msg: error
-
-  # $scope.$watch('fillup.longitude', resolveNearbyStations)
-  $scope.$watch('fillup.latitude', resolveNearbyStations)
 
   $scope.setSelectedStation = (station) ->
-    $scope.fillup.google_place = station.reference
+    $scope.selectedStation = station
+
+  $scope.$watch 'selectedStation', () ->
+    $scope.fillup.google_place = $scope.selectedStation.reference
 
   $scope.$watch 'fillup.google_place', ->
     # Get additional information about this place. We could use this to display

@@ -36,7 +36,7 @@
 
         <div class="collapse navbar-collapse" id="mobilemiles-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li ng-repeat="link in navLinks | orderBy : 'position'">
+            <li ng-repeat="link in navLinks | orderBy : 'position'" ng-class="{'active' : link.active}">
               <a ng-href="{{link.url}}" ng-click="link.click()">
                 <span ng-hide="!link.icon"><i class="{{link.icon}}"></i></span>
                 <span ng-hide="!link.title">{{link.title}}</span>
@@ -122,6 +122,7 @@
         <script src="scripts/location/module.js"></script>
         <script src="scripts/location/geolocation.js"></script>
         <script src="scripts/location/gasStationService.js"></script>
+        <script src="scripts/location/gasStationMap.js"></script>
 
         <script src="scripts/fillups/module.js"></script>
         <script src="scripts/fillups/fillupChangeTimeCtrl.js"></script>

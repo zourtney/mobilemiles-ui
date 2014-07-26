@@ -3,7 +3,6 @@ angular.module 'mobilemiles.fillups', [
   'ui.bootstrap'
   'ngResource'
   'angularMoment'
-  'google-maps'
   'mobilemiles.common'
   'mobilemiles.vehicles'
   'mobilemiles.location'

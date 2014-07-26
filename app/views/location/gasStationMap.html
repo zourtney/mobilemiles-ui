@@ -1,0 +1,12 @@
+<google-map class="fillup-location-map"
+        center="mapMetadata.center"
+        zoom="mapMetadata.zoom"
+        control="mapMetadata.control"
+        draggable="true">
+  
+  <markers models="stations">
+    <marker ng-repeat="station in stations"
+            coords="{latitude: station.geometry.location.lat(), longitude: station.geometry.location.lng()}">
+    </marker>  
+  </markers>
+</google-map>
