@@ -1,5 +1,6 @@
 .location-address-name {
   display: block;
+  font-size: 18px;
 }
 .location-address-street {
   font-style: italic;
@@ -8,14 +9,11 @@
   font-weight: bold;
   color: $brand-success;
 }
+.location-logo {
+  float: left;
+  margin-right: 20px;
+}
 
-.station-list {
-  .station {
-    padding: 10px 15px;
-    border-bottom: 1px solid $gray;
-
-    &.selected {
-      background: $gray-lighter;
-    }
-  }
+.location-edit-select {
+  padding-bottom: 20px;
 }

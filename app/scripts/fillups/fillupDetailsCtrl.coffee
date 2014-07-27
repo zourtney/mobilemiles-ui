@@ -167,6 +167,19 @@ angular.module 'mobilemiles.fillups'
           .finally ->
             $scope.isSaving = false
 
+  $scope.changeLocation = ->
+    modalInstance = $modal.open
+      templateUrl: 'views/fillups/fillupChangeLocation.html',
+      controller: 'FillupChangeLocationCtrl',
+      resolve:
+        mapMetadata: -> $scope.mapMetadata,
+        stations: -> $scope.stations,
+        selectedStation: -> $scope.selectedStation
+
+    modalInstance.result.then (station) ->
+      debugger
+      $scope.selectedStation = station
+
   # Keep `fillup.vehicle_id` in sync with the currently selected one from the
   # dropdown.
   $scope.$watch 'vehicle', () ->
@@ -184,10 +197,8 @@ angular.module 'mobilemiles.fillups'
       # https://developers.google.com/maps/documentation/javascript/places#place_details_responses
       GasStation.getDetails($scope.mapMetadata.control.getGMap(), $scope.selectedStation.reference)
         .then (data) ->
-          debugger
           $scope.fillup.google_place = data.reference
         .catch (error) ->
-          debugger
           $scope.fillup.google_place = $scope.selectedStation.reference
           $scope.alerts.push
             type: 'warning'

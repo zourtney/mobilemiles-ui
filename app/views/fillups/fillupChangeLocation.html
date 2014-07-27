@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h3 class="modal-title">Edit fill-up location</h3>
+</div>
+<div class="modal-body">
+  <div class="col-sm-5 location-edit-select">
+    <mm-gas-station-list map-metadata="mapMetadata"
+                         stations="stations"
+                         ng-model="selected.station">
+    </mm-gas-station-list>
+  </div>
+  <div class="col-sm-7">
+    <img class="location-logo"
+         ng-src="{{selected.photo}}"
+         width="selected.station.photos[0].width"
+         width="selected.station.photos[0].height" />
+    <div>
+      <span class="location-address-name">{{selected.station.name}}</span>
+      <span class="location-address-street">{{selected.station.vicinity}}</span>
+    </div>
+    <div class="location-open-now open" ng-show="selected.station.opening_hours.open_now">Open now</div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" ng-click="ok()">Save</button>
+</div>
