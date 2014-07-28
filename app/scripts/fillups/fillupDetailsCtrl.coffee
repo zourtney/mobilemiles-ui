@@ -48,14 +48,19 @@ angular.module 'mobilemiles.fillups'
           msg: error
 
   getOneStation = () ->
-    GasStation.getDetails($scope.mapMetadata.control.getGMap(), $scope.fillup.google_place)
-      .then (data) ->
-        $scope.stations = [data]
-        $scope.selectedStation = $scope.stations[0]
-      .catch (error) ->
-        $scope.alerts.push
-          type: 'warning'
-          msg: error
+    if $scope.fillup.google_place
+      GasStation.getDetails($scope.mapMetadata.control.getGMap(), $scope.fillup.google_place)
+        .then (data) ->
+          $scope.stations = [data]
+          $scope.selectedStation = $scope.stations[0]
+        .catch (error) ->
+          $scope.alerts.push
+            type: 'warning'
+            msg: error
+    else
+      $scope.alerts.push
+        type: 'info'
+        msg: 'Gas station not recorded. No worries, you can still set it using the "When and where" section whenever you want.'
 
   
 
