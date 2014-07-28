@@ -6,10 +6,11 @@ angular.module 'mobilemiles.auth', [
 ]
 
 # Define routes
-.config ($routeProvider) ->
+.config ['$routeProvider', ($routeProvider) ->
   $routeProvider.when '/login',
     templateUrl: 'views/auth/login.html',
     controller: 'LoginCtrl'
+]
 
 # Define log out action
 .run ['$rootScope', '$location', 'Session', ($rootScope, $location, Session) ->

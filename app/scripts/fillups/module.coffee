@@ -9,7 +9,7 @@ angular.module 'mobilemiles.fillups', [
 ]
 
 # Define routes
-.config ($routeProvider) ->
+.config ['$routeProvider', ($routeProvider) ->
   $routeProvider.when '/fillups',
     templateUrl: 'views/fillups/fillupList.html',
     controller: 'FillupListCtrl'
@@ -19,6 +19,7 @@ angular.module 'mobilemiles.fillups', [
     controller: 'FillupDetailsCtrl',
     resolve:
       fillupId: ['$route', ($route) -> $route.current.params.id]
+]
 
 # Add route to global nav links
 .run ['$rootScope', ($rootScope) ->

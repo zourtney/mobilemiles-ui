@@ -7,7 +7,7 @@ angular.module 'mobilemiles.vehicles', [
 ]
 
 # Define routes
-.config ($routeProvider) ->
+.config ['$routeProvider', ($routeProvider) ->
   $routeProvider.when '/vehicles',
     templateUrl: 'views/vehicles/vehicleList.html',
     controller: 'VehicleListCtrl'
@@ -17,6 +17,7 @@ angular.module 'mobilemiles.vehicles', [
     controller: 'VehicleDetailsCtrl',
     resolve:
       vehicleId: ['$route', ($route) -> $route.current.params.id]
+]
 
 # Add route to global nav links
 .run ['$rootScope', ($rootScope) ->
