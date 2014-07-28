@@ -19,9 +19,10 @@ angular.module 'mobilemiles.auth', [
 ]
 
 # Add route to global nav links
-.run ($rootScope) ->
+.run ['$rootScope', ($rootScope) ->
   ($rootScope.navLinks || = []).push
     icon: 'fa fa-sign-out',
     title: 'Log out',
     position: 100,
     click: -> $rootScope.$broadcast('logOut')
+]

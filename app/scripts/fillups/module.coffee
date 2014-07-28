@@ -21,8 +21,9 @@ angular.module 'mobilemiles.fillups', [
       fillupId: ['$route', ($route) -> $route.current.params.id]
 
 # Add route to global nav links
-.run ($rootScope) ->
+.run ['$rootScope', ($rootScope) ->
   ($rootScope.navLinks || = []).push
     title: 'Fill-ups',
     url: '#fillups',
     position: 1
+]

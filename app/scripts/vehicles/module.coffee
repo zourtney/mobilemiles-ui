@@ -19,8 +19,9 @@ angular.module 'mobilemiles.vehicles', [
       vehicleId: ['$route', ($route) -> $route.current.params.id]
 
 # Add route to global nav links
-.run ($rootScope) ->
+.run ['$rootScope', ($rootScope) ->
   ($rootScope.navLinks || = []).push
     title: 'Vehicles',
     url: '#vehicles',
     position: 0
+]

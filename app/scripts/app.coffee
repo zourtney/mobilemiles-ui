@@ -1,13 +1,13 @@
 window.mobilemiles = angular.module 'mobilemiles.app', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'ngRoute',
-  'mobilemiles.common',
-  'mobilemiles.auth',
-  'mobilemiles.users',
-  'mobilemiles.vehicles',
-  'mobilemiles.fillups',
+  'ngCookies'
+  'ngResource'
+  'ngSanitize'
+  'ngRoute'
+  'mobilemiles.common'
+  'mobilemiles.auth'
+  'mobilemiles.users'
+  'mobilemiles.vehicles'
+  'mobilemiles.fillups'
   'mobilemiles.location'
 ]
 
