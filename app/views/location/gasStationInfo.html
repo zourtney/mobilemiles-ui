@@ -1,7 +1,11 @@
-<div class="location-container">
+<div class="location-container" ng-hide="!ngModel">
   <img ng-src="{{photoUrl}}" />
   <div>
     <span class="component address-name">{{ngModel.name}}</span>
     <span class="component address-street">{{ngModel.vicinity}}</span>
   </div>
+</div>
+
+<div class="location-container" ng-show="!ngModel">
+  No gas station selected
 </div>

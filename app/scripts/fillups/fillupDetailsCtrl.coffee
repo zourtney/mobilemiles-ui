@@ -43,6 +43,10 @@ angular.module 'mobilemiles.fillups'
           $scope.fillup.google_place = results[0].reference
           $scope.selectedStation = results[0]
       .catch (error) ->
+        if error == 'ZERO_RESULTS'
+          $scope.stations = []
+          $scope.selectedStation = null
+        
         $scope.alerts.push
           type: 'warning'
           msg: error
@@ -177,13 +181,12 @@ angular.module 'mobilemiles.fillups'
       templateUrl: 'views/fillups/fillupChangeLocation.html',
       controller: 'FillupChangeLocationCtrl',
       resolve:
-        mapMetadata: -> $scope.mapMetadata,
-        stations: -> $scope.stations,
-        selectedStation: -> $scope.selectedStation
+        fillup: -> $scope.fillup
 
-    modalInstance.result.then (station) ->
-      debugger
-      $scope.selectedStation = station
+    modalInstance.result.then (result) ->
+      $scope.fillup.latitude = result.latitude
+      $scope.fillup.longitude = result.longitude
+      getNearbyStations()
 
   # Keep `fillup.vehicle_id` in sync with the currently selected one from the
   # dropdown.

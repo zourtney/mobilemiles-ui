@@ -2,30 +2,20 @@
   <h3 class="modal-title">Edit fill-up location</h3>
 </div>
 <div class="modal-body">
-  <div class="">
-    <label class="form-control">Find gas stations near</label>
-    <div class="row">
-      <input type="text" class="form-control col-sm-6" ng-model="fillup.longitude" />
-      <input type="text" class="form-control col-sm-6" ng-model="fillup.latitude" />
+  <p>Update the geolocation of the fill-up.</p>
+  <form>
+    <div class="form-group">
+      <label>Latitude</label>
+      <div>
+        <input type="text" class="form-control" ng-model="coords.longitude" />
+      </div>
     </div>
-    <button class="btn btn-default">Find</button>
-  </div>
-  <div class="col-sm-5 location-edit-select">
-    <mm-gas-station-list map-metadata="mapMetadata"
-                         stations="stations"
-                         ng-model="selected.station">
-    </mm-gas-station-list>
-  </div>
-  <div class="col-sm-7">
-    <img class="location-logo"
-         ng-src="{{selected.photo}}"
-         width="selected.station.photos[0].width"
-         width="selected.station.photos[0].height" />
-    <div>
-      <span class="location-address-name">{{selected.station.name}}</span>
-      <span class="location-address-street">{{selected.station.vicinity}}</span>
+    <div class="form-group">
+      <label>Longitude</label>
+      <div>
+        <input type="text" class="form-control" ng-model="coords.latitude" />
+      </div>
     </div>
-    <div class="location-open-now open" ng-show="selected.station.opening_hours.open_now">Open now</div>
   </div>
   <div class="clearfix"></div>
 </div>

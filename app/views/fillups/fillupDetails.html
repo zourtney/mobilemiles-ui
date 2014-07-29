@@ -39,7 +39,6 @@
             </p>
             
             <mm-gas-station-info ng-model="selectedStation"></mm-gas-station-info>
-            <button class="btn btn-link pull-left" ng-click="changeLocation()">change</button>
           </div>
         </div>
       </div>
@@ -123,14 +122,9 @@
         <div class="pull-right text-muted">
           <small class="latitude">{{fillup.latitude}}</small>
           <small class="longitude">{{fillup.longitude}}</small>
+          <button class="btn btn-link" ng-click="changeLocation()">change</button>
         </div>
       </div>
-
-      <mm-gas-station-list map-metadata="mapMetadata"
-                           stations="stations"
-                           ng-model="selectedStation">
-      </mm-gas-station-list>
-
     </div>
   </div>
 
