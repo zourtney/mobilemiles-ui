@@ -37,16 +37,6 @@
               Filling up now
               <button class="btn btn-link" ng-click="changeTime()">set time</button>
             </p>
-
-            <p class="fillup-address">
-              <span class="location-address-name">{{selectedStation.name}}</span>
-              <span class="location-address-street">{{selectedStation.vicinity}}</span>
-              <button class="btn btn-link" ng-click="changeLocation()">change</button>
-            </p>
-
-            <p class="text-muted">
-              {{fillup.latitude}}, {{fillup.longitude}}
-            </p>
           </div>
         </div>
       </div>
@@ -126,10 +116,43 @@
                           ng-model="selectedStation">
       </mm-gas-station-map>
 
+        <!--<span class="location-address-name">{{selectedStation.name}}</span>
+        <span class="location-address-street">{{selectedStation.vicinity}}</span>
+        <button class="btn btn-link" ng-click="changeLocation()">change</button>
+      </p>
+      <p class="fillup-address" ng-show="!fillup.google_place">
+        No gas station specified
+        <button class="btn btn-link" ng-click="changeLocation()">set location</button>
+      </p>-->
+
+      <div>
+        <div class="form-group">
+          <label>Geoposition</label>
+          <div>
+            {{fillup.latitude}}, {{fillup.longitude}}
+            <button class="btn btn-default">
+              <i class="fa fa-compass"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="location-address-name">{{selectedStation.name}}</span>
+          <span class="location-address-street">{{selectedStation.vicinity}}</span>
+          <button class="btn btn-link" ng-click="changeLocation()">change</button>
+        </p>
+        <p class="fillup-address" ng-show="!fillup.google_place">
+          No gas station specified
+          <button class="btn btn-link" ng-click="changeLocation()">set location</button>
+        </p>
+      </div>
+
       <mm-gas-station-list map-metadata="mapMetadata"
                            stations="stations"
                            ng-model="selectedStation">
       </mm-gas-station-list>
+
     </div>
   </div>
 

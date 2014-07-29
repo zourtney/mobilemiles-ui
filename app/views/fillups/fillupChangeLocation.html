@@ -2,6 +2,14 @@
   <h3 class="modal-title">Edit fill-up location</h3>
 </div>
 <div class="modal-body">
+  <div class="">
+    <label class="form-control">Find gas stations near</label>
+    <div class="row">
+      <input type="text" class="form-control col-sm-6" ng-model="fillup.longitude" />
+      <input type="text" class="form-control col-sm-6" ng-model="fillup.latitude" />
+    </div>
+    <button class="btn btn-default">Find</button>
+  </div>
   <div class="col-sm-5 location-edit-select">
     <mm-gas-station-list map-metadata="mapMetadata"
                          stations="stations"
