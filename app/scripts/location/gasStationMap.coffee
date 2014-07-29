@@ -1,6 +1,6 @@
 angular.module 'mobilemiles.location'
 
-.directive 'mmGasStationMap', [ -> {
+.directive 'mmGasStationMap', ['GasStation', (GasStation) -> {
 
   restrict: 'E'
   
@@ -21,14 +21,6 @@ angular.module 'mobilemiles.location'
     zoomMap = ->
       scope.mapMetadata.zoom = 16
 
-    setPhoto = ->
-      m = scope.ngModel
-      if m and m.photos and m.photos.length
-        scope.photo = m.photos[0].getUrl({ maxWidth: 32, maxHeight: 32 })
-      else
-        scope.photo = ' '   # can't use a standard falsey value...stupid.
-
-
     zoomTo = true
     scope.$watch 'ngModel', ->
       if scope.ngModel
@@ -41,7 +33,8 @@ angular.module 'mobilemiles.location'
           zoomTo = false
 
         # Set selected photo
-        setPhoto()
+        #TODO: figure out a way to use mm-gas-station-info, and how the window be properly sized
+        scope.photoUrl = GasStation.photoUrl(scope.ngModel)
 
     scope.setStation = (station) ->
       scope.ngModel = station

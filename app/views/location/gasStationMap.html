@@ -8,9 +8,9 @@
     <marker ng-repeat="station in stations"
             coords="{latitude: station.geometry.location.lat(), longitude: station.geometry.location.lng()}"
             click="setStation(station)">
-      <window isIconVisibleOnClick="false" show="ngModel === station">
+      <window isIconVisibleOnClick="true" show="ngModel === station">
         <div class="location-container">
-          <img ng-src="{{photo}}" />
+          <img ng-src="{{photoUrl}}" />
           <div>
             <span class="component address-name">{{station.name}}</span>
             <span class="component address-street">{{station.vicinity}}</span>

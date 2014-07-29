@@ -36,4 +36,9 @@ angular.module 'mobilemiles.location'
 
     return deferred.promise
 
+  photoUrl: (place, w=32, h=32) ->
+    if place and place.photos and place.photos.length
+      return place.photos[0].getUrl({ maxWidth: w, maxHeight: h })
+    return ' '   # can't use a standard falsey value...stupid.
+
 }]
