@@ -19,7 +19,7 @@
     <marker ng-repeat="station in stations"
             coords="{latitude: station.geometry.location.lat(), longitude: station.geometry.location.lng()}"
             click="setStation(station)">
-      <window isIconVisibleOnClick="true" show="ngModel === station">
+      <window isIconVisibleOnClick="true" show="ngModel.id === station.id" options="{disableAutoPan: true}">
         <div class="location-container">
           <img ng-src="{{photoUrl}}" />
           <div>
