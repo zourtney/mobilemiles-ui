@@ -38,7 +38,9 @@
               <button class="btn btn-link" ng-click="changeTime()">set time</button>
             </p>
             
-            <mm-gas-station-info ng-model="selectedStation" class="pull-left"></mm-gas-station-info>
+            <p class="pull-left">
+              <mm-gas-station-info ng-model="selectedStation"></mm-gas-station-info>
+            </p>
             <button class="btn btn-link pull-left fillup-station-clear"
                     ng-hide="!selectedStation"
                     ng-click="clearSelectedStation()"
