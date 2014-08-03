@@ -60,8 +60,7 @@ angular.module 'mobilemiles.fillups'
             type: 'warning'
             msg: error
     else
-      $scope.fillup.google_place = null
-      $scope.selectedStation = null
+      clearSelectedStation()
 
   getOneStation = () ->
     if $scope.fillup.google_place
@@ -213,5 +212,9 @@ angular.module 'mobilemiles.fillups'
           $scope.alerts.push
             type: 'warning'
             msg: error
+
+  $scope.clearSelectedStation = ->
+    $scope.selectedStation = null
+    $scope.fillup.google_place = null
 
 ]
