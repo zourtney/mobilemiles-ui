@@ -190,18 +190,6 @@ angular.module 'mobilemiles.fillups'
           .finally ->
             $scope.isSaving = false
 
-  $scope.changeLocation = ->
-    modalInstance = $modal.open
-      templateUrl: 'views/fillups/fillupChangeLocation.html',
-      controller: 'FillupChangeLocationCtrl',
-      resolve:
-        fillup: -> $scope.fillup
-
-    modalInstance.result.then (result) ->
-      $scope.fillup.latitude = result.latitude
-      $scope.fillup.longitude = result.longitude
-      getNearbyStations()
-
   # Keep `fillup.vehicle_id` in sync with the currently selected one from the
   # dropdown.
   $scope.$watch 'vehicle', () ->
