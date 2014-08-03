@@ -42,6 +42,10 @@ angular.module 'mobilemiles.fillups'
           type: 'warning',
           msg: error.message
 
+  $scope.resetGeolocation = ->
+    $scope.clearSelectedStation()
+    $scope.getGeolocation()
+
 
   getNearbyStations = ->
     if $scope.mapMetadata.center.latitude and $scope.mapMetadata.center.longitude
