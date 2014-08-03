@@ -1,10 +1,21 @@
 <google-map class="fillup-location-map"
         center="mapMetadata.center"
         zoom="mapMetadata.zoom"
+        pan="true"
         control="mapMetadata.control"
+        events="mapMetadata.events"
         draggable="true">
   
   <markers models="stations">
+    <!-- You are here -->
+    <circle center="{latitude: geoCoords.latitude || 0, longitude: geoCoords.longitude || 0}"
+            radius="50"
+            stroke="{color: '#2a6596'}"
+            fill="{color: '#2a6596', opacity: 0.5}"
+            visible="true">
+    </circle>
+
+    <!-- Show gas stations as markers with a toggable info window -->
     <marker ng-repeat="station in stations"
             coords="{latitude: station.geometry.location.lat(), longitude: station.geometry.location.lng()}"
             click="setStation(station)">

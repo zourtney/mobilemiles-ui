@@ -38,7 +38,7 @@
               <button class="btn btn-link" ng-click="changeTime()">set time</button>
             </p>
             
-            <mm-gas-station-info ng-model="selectedStation"></mm-gas-station-info>
+            <mm-gas-station-info ng-model="selectedStation" class="pull-left"></mm-gas-station-info>
           </div>
         </div>
       </div>
@@ -115,13 +115,18 @@
     <div class="col-sm-6">
       <mm-gas-station-map map-metadata="mapMetadata"
                           stations="stations"
+                          geo-coords="fillup"
                           ng-model="selectedStation">
       </mm-gas-station-map>
 
       <div class="fillup-geolocation">
-        <div class="pull-right text-muted">
-          <small class="latitude">{{fillup.latitude}}</small>
-          <small class="longitude">{{fillup.longitude}}</small>
+        <div class="pull-left text-muted">
+          <small>Showing gas stations near</small>
+          <small class="latitude">{{mapMetadata.center.latitude}}</small>
+          <small class="longitude">{{mapMetadata.center.longitude}}</small>
+          <button class="btn btn-sm btn-link" ng-click="getGeolocation()">
+            <a class="fa fa-compass" title="Fetch nearby gas stations"></a>
+          </button>
           <button class="btn btn-link" ng-click="changeLocation()">change</button>
         </div>
       </div>

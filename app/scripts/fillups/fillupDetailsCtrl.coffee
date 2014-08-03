@@ -14,42 +14,54 @@ angular.module 'mobilemiles.fillups'
 
 
 
+
   $scope.mapMetadata =
     control: {}
-    zoom: 8
+    zoom: 16
     center:
-      latitude: 35.5348213   # somewhere cool looking
+      latitude: 35.5348213   # somewhere cool
       longitude: -83.587697
-
+    events:
+      dragend: ->
+        getNearbyStations()
+      zoom_changed: ->
+        getNearbyStations()
 
 
   # Fetch geolocation
-  setLocation = () ->
+  $scope.getGeolocation = () ->
     Geolocation.get()
       .then (location) ->
         $scope.fillup.latitude = location.coords.latitude
         $scope.fillup.longitude = location.coords.longitude
+        $scope.mapMetadata.center.latitude = location.coords.latitude
+        $scope.mapMetadata.center.longitude = location.coords.longitude
         getNearbyStations()
       .catch (error) ->
         $scope.alerts.push
           type: 'warning',
           msg: error.message
 
-  getNearbyStations = () ->
-    GasStation.nearby($scope.mapMetadata.control.getGMap(), $scope.fillup.latitude, $scope.fillup.longitude)
-      .then (results) ->
-        $scope.stations = results
-        if $scope.isNew and results.length
-          $scope.fillup.google_place = results[0].reference
-          $scope.selectedStation = results[0]
-      .catch (error) ->
-        if error == 'ZERO_RESULTS'
-          $scope.stations = []
-          $scope.selectedStation = null
-        
-        $scope.alerts.push
-          type: 'warning'
-          msg: error
+
+  getNearbyStations = ->
+    if $scope.mapMetadata.center.latitude and $scope.mapMetadata.center.longitude
+      GasStation.nearby($scope.mapMetadata.control.getGMap(), $scope.mapMetadata.center.latitude, $scope.mapMetadata.center.longitude)
+        .then (results) ->
+          $scope.stations = results
+          if $scope.isNew and results.length
+            $scope.fillup.google_place = results[0].reference
+            $scope.selectedStation = results[0]
+        .catch (error) ->
+          if error == 'ZERO_RESULTS'
+            $scope.stations = []
+            $scope.selectedStation = null
+          
+          $scope.alerts.push
+            type: 'warning'
+            msg: error
+    else
+      $scope.fillup.google_place = null
+      $scope.selectedStation = null
 
   getOneStation = () ->
     if $scope.fillup.google_place
@@ -68,12 +80,14 @@ angular.module 'mobilemiles.fillups'
 
   
 
+
+
   if fillupId == 'new'
     # Create a new fillup object, initialized with current position.
     $scope.isNew = true
     $scope.fillup = new Fillup()
     $scope.autoCalcPrice = true 
-    setLocation()
+    $scope.getGeolocation()
   else
     # Fetch the existing fillup.
     Fillup.get({ id: fillupId }).$promise
