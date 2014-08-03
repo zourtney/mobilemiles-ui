@@ -54,13 +54,13 @@ angular.module 'mobilemiles.fillups'
         .catch (error) ->
           if error == 'ZERO_RESULTS'
             $scope.stations = []
-            $scope.selectedStation = null
-          
-          $scope.alerts.push
-            type: 'warning'
-            msg: error
+            $scope.clearSelectedStation()
+          else
+            $scope.alerts.push
+              type: 'warning'
+              msg: error
     else
-      clearSelectedStation()
+      $scope.clearSelectedStation()
 
   getOneStation = () ->
     if $scope.fillup.google_place
