@@ -1,6 +1,6 @@
 angular.module 'mobilemiles.location'
 
-.directive 'mmGasStationMap', ['GasStation', (GasStation) -> {
+.directive 'mmGasStationMap', ['$rootScope', 'GasStation', ($rootScope, GasStation) -> {
 
   restrict: 'E'
   
@@ -23,5 +23,9 @@ angular.module 'mobilemiles.location'
 
     scope.setStation = (station) ->
       scope.ngModel = station
+      $rootScope.$digest()   # needed, otherwise the `isCurrentStation` check doesn't re-run until panning.
+
+    scope.isCurrentStation = (station) ->
+      scope.ngModel.id == station.id
 
 }]
