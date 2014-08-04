@@ -21,6 +21,9 @@ angular.module 'mobilemiles.fillups'
     center:
       latitude: 35.5348213   # somewhere cool
       longitude: -83.587697
+    setCenter: (obj) ->
+      @center.latitude = if obj.lat then obj.lat() else obj.latitude
+      @center.longitude = if obj.lng then obj.lng() else obj.longitude
     events:
       dragend: ->
         getNearbyStations()
@@ -34,8 +37,7 @@ angular.module 'mobilemiles.fillups'
       .then (location) ->
         $scope.fillup.latitude = location.coords.latitude
         $scope.fillup.longitude = location.coords.longitude
-        $scope.mapMetadata.center.latitude = location.coords.latitude
-        $scope.mapMetadata.center.longitude = location.coords.longitude
+        $scope.mapMetadata.setCenter(location.coords)
         getNearbyStations()
       .catch (error) ->
         $scope.alerts.push
@@ -75,6 +77,7 @@ angular.module 'mobilemiles.fillups'
         .then (data) ->
           $scope.stations = [data]
           $scope.selectedStation = $scope.stations[0]
+          $scope.mapMetadata.setCenter($scope.selectedStation.geometry.location)
         .catch (error) ->
           $scope.alerts.push
             type: 'warning'
