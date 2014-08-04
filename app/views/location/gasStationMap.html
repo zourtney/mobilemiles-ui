@@ -6,7 +6,7 @@
         events="mapMetadata.events"
         draggable="true">
   
-  <markers models="stations">
+  <markers>
     <!-- You are here -->
     <circle center="{latitude: geoCoords.latitude || 0, longitude: geoCoords.longitude || 0}"
             radius="50"
@@ -17,7 +17,7 @@
 
     <!-- Show gas stations as markers with a toggable info window -->
     <marker ng-repeat="station in stations"
-            idkey="station.id"
+            idKey="station.id"
             coords="{latitude: station.geometry.location.lat(), longitude: station.geometry.location.lng()}"
             click="setStation(station)">
       <window isIconVisibleOnClick="true" show="ngModel.id === station.id" options="{disableAutoPan: true}">

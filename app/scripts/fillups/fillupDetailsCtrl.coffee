@@ -51,8 +51,11 @@ angular.module 'mobilemiles.fillups'
     if $scope.mapMetadata.center.latitude and $scope.mapMetadata.center.longitude
       GasStation.nearby($scope.mapMetadata.control.getGMap(), $scope.mapMetadata.center.latitude, $scope.mapMetadata.center.longitude)
         .then (results) ->
+          # Store results
           $scope.stations = results
-          if $scope.isNew and results.length and not $scope.selectedStation
+          
+          # When no current station, set it to the "closest" one.
+          if results.length and not $scope.selectedStation
             $scope.fillup.google_place = results[0].reference
             $scope.selectedStation = results[0]
         .catch (error) ->
