@@ -23,7 +23,9 @@ angular.module 'mobilemiles.location'
 
     scope.setStation = (station) ->
       scope.ngModel = station
-      $rootScope.$digest()   # needed, otherwise the `isCurrentStation` check doesn't re-run until panning.
+
+      # Needed, otherwise the `isCurrentStation` check doesn't re-run until panning.
+      $rootScope.$digest()
 
     scope.isCurrentStation = (station) ->
       scope.ngModel.id == station.id

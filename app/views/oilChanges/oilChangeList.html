@@ -1,0 +1,42 @@
+<div class="resource-header">
+  <h1>Oil changes</h1>
+
+  <a class="btn btn-default resource-add pull-right" ng-href="#/oilChanges/new">
+    <i class="fa fa-plus-circle"></i> Create new
+  </a>
+
+  <div class="resource-sort">
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'completed_at'">created</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'price'">price</label>
+      <label class="btn btn-default" ng-model="sortProperty" btn-radio="'vehicle.name'">vehicle</label>
+    </div>
+
+    <label>
+      <input type="checkbox" ng-model="sortReverse" />reverse
+    </label>
+  </div>
+</div>
+
+<ul class="resource-list oil-change-list list-unstyled">
+  <li class="resource" ng-repeat="oilChange in oilChanges | orderBy:sortProperty:sortReverse">
+    <a ng-href="#/oilChanges/{{oilChange.id}}">
+      <div class="body">
+        <h3 ng-show="!oilChange.name">${{oilChange.price}}</h3>
+        <h3 ng-hide="!oilChange.name">{{oilChange.name}}</h3>
+
+        <h4>
+          <span ng-hide="!oilChange.oil_quantity">
+            {{oilChange.oil_quantity}} qt
+            <span ng-hide="!oilChange.oil_weight">of {{oilChange.oil_weight}}</span>
+          </span>
+          in
+          <span ng-hide="!oilChange.vehicle.name">{{oilChange.vehicle.name}}</span>
+          <span ng-show="!oilChange.vehicle.name">{{oilChange.vehicle.year}} {{oilChange.vehicle.make}} {{oilChange.vehicle.model}}</span>
+        </h4>
+      </div>
+      <div class="extra single-line">{{oilChange.completed_at | amCalendar }}</div>
+      <div class="clearfix"></div>
+    </a>
+  </li>
+</ul>

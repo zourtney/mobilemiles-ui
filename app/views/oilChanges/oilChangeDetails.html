@@ -1,0 +1,119 @@
+<div class="resource-not-found" ng-show="!oilChange">
+  <h1>Oil change not found</h1>
+</div>
+
+<div ng-hide="!oilChange">
+  <div class="resource-header">
+    <h1 ng-show="isNew">New oil change</h1>
+    <h1 ng-hide="isNew">Oil change {{oilChange.name}}</h1>
+    <h3 ng-show="!vehicle" class="text-muted">No vehicle selected</h3>
+    <h3 ng-hide="!vehicle">
+      for
+      <span ng-show="!vehicle.name">unnamed</span>
+      <span ng-hide="!vehicle.name">{{vehicle.name}}</span>
+      {{vehicle.year}} {{vehicle.make}} {{vehicle.model}}
+    </h3>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <form role="form" class="col-sm-6">
+      <div class="row center-block">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" class="col-md-8 col-md-offset-2">
+          {{alert.msg}}
+        </alert>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>When</label>
+          <div>
+            <p ng-hide="!oilChange.completed_at">
+              {{oilChange.completed_at | date : 'MM-dd-yyyy'}} at {{oilChange.completed_at | date : 'hh:mma'}}
+            </p>
+            <p ng-show="!oilChange.completed_at">
+              Changing it now
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-8">
+          <label for="vehicleSelect">Vehicle</label>
+          <select id="vehicleSelect" class="form-control" ng-model="vehicle" ng-options="v.name || 'Unnamed' for v in vehicles" ng-disabled="isBusy()">
+            <option value="" disabled="disabled">Select vehicle</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="mileageInput">Mileage</label>
+          <input type="number" id="mileageInput" class="form-control" ng-model="oilChange.mileage" ng-disabled="isBusy()" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="oilQuantityInput">Oil quantity</label>
+          <div class="input-group">
+            <input type="number" id="oilQuantityInput" class="form-control" ng-model="oilChange.oil_quantity" ng-disabled="isBusy()" />
+            <span class="input-group-addon">qts</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label for="oilBrandInput">Oil brand</label>
+          <input type="text" id="oilBrandInput" class="form-control" ng-model="oilChange.oil_brand" ng-disabled="isBusy()" />
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="oilWeightInput">Weight</label>
+          <input type="text" id="oilWeightInput" class="form-control" ng-model="oilChange.oil_weight" ng-disabled="isBusy()" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="oilTypeInput">Oil type <span class="text-muted">(synthetic, etc)</span></label>
+          <input type="text" id="oilTypeInput" class="form-control" ng-model="oilChange.oil_type" ng-disabled="isBusy()" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <label for="oilFilterBrand">Filter brand</label>
+          <input type="text" id="oilFilterBrand" class="form-control" ng-model="oilChange.oil_filter_brand" ng-disabled="isBusy()" />
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="oilFilterPartNumberInput">Filter part number</label>
+          <input type="text" id="oilFilterPartNumberInput" class="form-control" ng-model="oilChange.oil_filter_part_number" ng-disabled="isBusy()" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <label for="priceInput">Total cost</label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" id="priceInput" class="form-control" ng-model="oilChange.price" ng-disabled="isBusy() || autoCalcPrice" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label for="commentInput">Comment <span class="text-muted">(optional)</span></label>
+          <textarea class="form-control" id="commentInput" ng-model="oilChange.comment" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-3">
+          <button class="btn btn-primary" ng-click="save()" ng-disabled="isBusy()">
+            <span ng-show="isSaving">Saving...</span>
+            <span ng-hide="isSaving">
+              <span ng-show="isNew">Create</span>
+              <span ng-hide="isNew">Save changes</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

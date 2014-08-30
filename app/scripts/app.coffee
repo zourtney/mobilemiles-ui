@@ -9,6 +9,7 @@ window.mobilemiles = angular.module 'mobilemiles.app', [
   'mobilemiles.vehicles'
   'mobilemiles.fillups'
   'mobilemiles.location'
+  'mobilemiles.oilChanges'
 ]
 
 # Set up default route. Actual routes are defined by modules.
